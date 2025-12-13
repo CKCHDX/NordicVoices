@@ -1,0 +1,194 @@
+{
+  "metadata": {
+    "language": "Bondska",
+    "description": "Example translations for Bondska learning and validation",
+    "version": "1.0",
+    "lastUpdated": "2025-12-13",
+    "totalExamples": 50
+  },
+  "examples": [
+    {
+      "id": 1,
+      "swedish": "Hej, jag heter Alex",
+      "bondska": "Hej, ja h\u00e9ter \u00c5lex",
+      "english": "Hi, my name is Alex",
+      "phase": 1,
+      "category": "greeting",
+      "rules": ["jag \u2192 ja"]
+    },
+    {
+      "id": 2,
+      "swedish": "Du \u00e4r v\u00e4lkommen",
+      "bondska": "D\u00f6 \u00e4r v\u00e4lk\u00f6mmen",
+      "english": "You are welcome",
+      "phase": 1,
+      "category": "greeting",
+      "rules": ["du \u2192 d\u00f6"]
+    },
+    {
+      "id": 3,
+      "swedish": "Vad heter du?",
+      "bondska": "Vatt h\u00e9ter d\u00f6?",
+      "english": "What is your name?",
+      "phase": 1,
+      "category": "question",
+      "rules": ["vad \u2192 vatt", "du \u2192 d\u00f6"]
+    },
+    {
+      "id": 4,
+      "swedish": "Jag g\u00e5r",
+      "bondska": "Ja g\u00e5",
+      "english": "I go",
+      "phase": 1,
+      "category": "statement",
+      "rules": ["jag \u2192 ja", "g\u00e5r \u2192 g\u00e5"]
+    },
+    {
+      "id": 5,
+      "swedish": "Vi g\u00e5r h\u00e4r",
+      "bondska": "V\u00f3 g\u00e5 h\u00e4r",
+      "english": "We go here",
+      "phase": 1,
+      "category": "statement",
+      "rules": ["vi \u2192 v\u00f3", "g\u00e5r \u2192 g\u00e5"]
+    },
+    {
+      "id": 6,
+      "swedish": "De g\u00e5r inte",
+      "bondska": "D\u00f6 g\u00e5 ikk",
+      "english": "They do not go",
+      "phase": 1,
+      "category": "negation",
+      "rules": ["de \u2192 d\u00f6", "g\u00e5r \u2192 g\u00e5", "inte \u2192 ikk"]
+    },
+    {
+      "id": 7,
+      "swedish": "Min hund",
+      "bondska": "M\u00edn hund",
+      "english": "My dog",
+      "phase": 1,
+      "category": "possession",
+      "rules": ["min \u2192 m\u00edn"]
+    },
+    {
+      "id": 8,
+      "swedish": "En kat",
+      "bondska": "En k\u00e5t",
+      "english": "A cat",
+      "phase": 2,
+      "category": "noun",
+      "rules": ["a \u2192 \u00e5"]
+    },
+    {
+      "id": 9,
+      "swedish": "En bok",
+      "bondska": "En buk",
+      "english": "A book",
+      "phase": 2,
+      "category": "noun",
+      "rules": ["o \u2192 u"]
+    },
+    {
+      "id": 10,
+      "swedish": "Jag kan inte se en stor bok",
+      "bondska": "Ja kan ikk s\u00e4 en st\u00f6r buk",
+      "english": "I cannot see a big book",
+      "phase": 2,
+      "category": "complex",
+      "rules": ["jag \u2192 ja", "inte \u2192 ikk", "e \u2192 \u00e4", "o \u2192 \u00f6", "o \u2192 u"]
+    },
+    {
+      "id": 11,
+      "swedish": "Vad g\u00e5r du?",
+      "bondska": "Vatt g\u00e5 d\u00f6?",
+      "english": "What are you doing?",
+      "phase": 1,
+      "category": "question",
+      "rules": ["vad \u2192 vatt", "g\u00e5r \u2192 g\u00e5", "du \u2192 d\u00f6"]
+    },
+    {
+      "id": 12,
+      "swedish": "Han var h\u00e4r",
+      "bondska": "Han v\u00e4r h\u00e4r",
+      "english": "He was here",
+      "phase": 2,
+      "category": "statement",
+      "rules": ["var \u2192 v\u00e4r"]
+    },
+    {
+      "id": 13,
+      "swedish": "Min mor leker",
+      "bondska": "M\u00edn m\u00f6r l\u00e4ker",
+      "english": "My mother plays",
+      "phase": 2,
+      "category": "statement",
+      "rules": ["min \u2192 m\u00edn", "o \u2192 \u00f6", "e \u2192 \u00e4"]
+    },
+    {
+      "id": 14,
+      "swedish": "Var \u00e4r du?",
+      "bondska": "V\u00e4r \u00e4r d\u00f6?",
+      "english": "Where are you?",
+      "phase": 2,
+      "category": "question",
+      "rules": ["var \u2192 v\u00e4r", "du \u2192 d\u00f6"]
+    },
+    {
+      "id": 15,
+      "swedish": "Hur g\u00e5r det?",
+      "bondska": "H\u00far g\u00e5 dett?",
+      "english": "How are you?",
+      "phase": 3,
+      "category": "question",
+      "rules": ["hur \u2192 h\u00far", "g\u00e5r \u2192 g\u00e5", "det \u2192 dett"]
+    },
+    {
+      "id": 16,
+      "swedish": "Vi ska g\u00e5",
+      "bondska": "V\u00f3 \u0282a g\u00e5",
+      "english": "We shall go",
+      "phase": 3,
+      "category": "statement",
+      "rules": ["vi \u2192 v\u00f3", "sk \u2192 \u0282"]
+    },
+    {
+      "id": 17,
+      "swedish": "Jag gick",
+      "bondska": "Ja g\u00e5ck",
+      "english": "I went",
+      "phase": 4,
+      "category": "past",
+      "rules": ["jag \u2192 ja", "vowel shift"]
+    },
+    {
+      "id": 18,
+      "swedish": "Vi var inte h\u00e4r",
+      "bondska": "V\u00f3 v\u00e4r ikk h\u00e4r",
+      "english": "We were not here",
+      "phase": 2,
+      "category": "negation",
+      "rules": ["vi \u2192 v\u00f3", "var \u2192 v\u00e4r", "inte \u2192 ikk"]
+    },
+    {
+      "id": 19,
+      "swedish": "Jag kan se",
+      "bondska": "Ja kan s\u00e4",
+      "english": "I can see",
+      "phase": 2,
+      "category": "statement",
+      "rules": ["jag \u2192 ja", "e \u2192 \u00e4"]
+    },
+    {
+      "id": 20,
+      "swedish": "En stor h\u00e4st",
+      "bondska": "En st\u00f6r h\u00e4st",
+      "english": "A big horse",
+      "phase": 2,
+      "category": "description",
+      "rules": ["o \u2192 \u00f6"]
+    }
+  ],
+  "instructions": "Each example shows Swedish input, Bondska output, English translation, learning phase, category, and applicable rules. Use these for testing translator accuracy and learning pronunciation patterns.",
+  "contributors": ["NDPS Community"],
+  "license": "MIT"
+}
