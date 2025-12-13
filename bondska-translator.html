@@ -6,16 +6,14 @@
     <title>Bondska Translator - Västerbottnian Dialect</title>
     <style>
         :root {
-            --primary-color: #2B7A78;
-            --secondary-color: #A23B72;
-            --accent-color: #F18F01;
+            --primary: #2B7A78;
+            --secondary: #A23B72;
+            --accent: #F18F01;
             --bg-light: #F6F6F6;
             --bg-dark: #2D3436;
             --text-dark: #2D3436;
             --text-light: #FFFFFF;
-            --border-color: #DFE6E9;
-            --success-color: #27AE60;
-            --error-color: #E74C3C;
+            --border: #DFE6E9;
         }
 
         * {
@@ -35,15 +33,15 @@
         .container {
             max-width: 1000px;
             margin: 0 auto;
-            background: var(--text-light);
+            background: white;
             border-radius: 12px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
             overflow: hidden;
         }
 
         header {
-            background: var(--primary-color);
-            color: var(--text-light);
+            background: var(--primary);
+            color: white;
             padding: 30px;
             text-align: center;
         }
@@ -61,17 +59,19 @@
         .tabs {
             display: flex;
             background: #F0F0F0;
-            border-bottom: 2px solid var(--border-color);
+            border-bottom: 2px solid var(--border);
             overflow-x: auto;
+            flex-wrap: wrap;
         }
 
         .tab-button {
             flex: 1;
+            min-width: 120px;
             padding: 15px 20px;
             background: none;
             border: none;
             cursor: pointer;
-            font-size: 1em;
+            font-size: 0.95em;
             font-weight: 500;
             color: var(--text-dark);
             transition: all 0.3s ease;
@@ -83,18 +83,19 @@
         }
 
         .tab-button.active {
-            color: var(--primary-color);
-            border-bottom-color: var(--primary-color);
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+            background: white;
         }
 
         .tab-content {
             display: none;
             padding: 30px;
+            animation: fadeIn 0.3s ease;
         }
 
         .tab-content.active {
             display: block;
-            animation: fadeIn 0.3s ease;
         }
 
         @keyframes fadeIn {
@@ -104,9 +105,9 @@
 
         .section-title {
             font-size: 1.8em;
-            color: var(--primary-color);
+            color: var(--primary);
             margin-bottom: 20px;
-            border-bottom: 2px solid var(--accent-color);
+            border-bottom: 2px solid var(--accent);
             padding-bottom: 10px;
         }
 
@@ -124,7 +125,7 @@
         textarea, input[type="text"], select {
             width: 100%;
             padding: 12px;
-            border: 2px solid var(--border-color);
+            border: 2px solid var(--border);
             border-radius: 6px;
             font-size: 1em;
             font-family: 'Segoe UI', sans-serif;
@@ -133,19 +134,20 @@
 
         textarea:focus, input[type="text"]:focus, select:focus {
             outline: none;
-            border-color: var(--primary-color);
+            border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(43, 122, 120, 0.1);
         }
 
         textarea {
             min-height: 100px;
             resize: vertical;
+            font-family: 'Courier New', monospace;
         }
 
         button {
             padding: 12px 24px;
-            background: var(--primary-color);
-            color: var(--text-light);
+            background: var(--primary);
+            color: white;
             border: none;
             border-radius: 6px;
             font-size: 1em;
@@ -153,10 +155,11 @@
             cursor: pointer;
             transition: all 0.3s ease;
             margin-right: 10px;
+            margin-bottom: 10px;
         }
 
         button:hover {
-            background: var(--secondary-color);
+            background: var(--secondary);
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
@@ -167,8 +170,8 @@
 
         .result {
             background: var(--bg-light);
-            border-left: 4px solid var(--accent-color);
-            padding: 15px;
+            border-left: 4px solid var(--accent);
+            padding: 20px;
             border-radius: 6px;
             margin-top: 20px;
             display: none;
@@ -181,70 +184,69 @@
         .result-label {
             font-weight: 600;
             color: var(--text-dark);
-            margin-bottom: 5px;
+            margin-bottom: 10px;
+            font-size: 0.95em;
         }
 
         .result-text {
-            font-size: 1.1em;
-            color: var(--primary-color);
-            padding: 10px;
-            background: var(--text-light);
+            font-size: 1.2em;
+            color: var(--primary);
+            padding: 15px;
+            background: white;
             border-radius: 4px;
+            border-left: 3px solid var(--accent);
             font-family: 'Courier New', monospace;
-        }
-
-        .controls {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .control-group {
-            flex: 1;
-            min-width: 200px;
+            word-wrap: break-word;
+            margin-bottom: 10px;
         }
 
         .info-box {
             background: #E8F4F8;
-            border-left: 4px solid var(--primary-color);
+            border-left: 4px solid var(--primary);
             padding: 15px;
             border-radius: 6px;
             margin-bottom: 20px;
+            line-height: 1.6;
         }
 
-        .alphabet-grid {
+        .grid-2 {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 15px;
             margin-bottom: 20px;
         }
 
-        .alphabet-item {
+        .card {
             background: var(--bg-light);
-            padding: 15px;
+            padding: 20px;
             border-radius: 6px;
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
         }
 
-        .alphabet-letter {
-            font-size: 1.5em;
-            font-weight: bold;
-            color: var(--primary-color);
-            margin-bottom: 5px;
+        .card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
         }
 
-        .alphabet-info {
-            font-size: 0.9em;
-            color: #666;
+        .card h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 1.1em;
         }
 
-        .example-box {
-            background: var(--bg-light);
+        .card-content {
+            font-size: 0.95em;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .example-item {
+            background: white;
+            border-left: 4px solid var(--secondary);
             padding: 15px;
-            border-radius: 6px;
             margin-bottom: 15px;
-            border-left: 4px solid var(--secondary-color);
+            border-radius: 4px;
         }
 
         .example-swedish {
@@ -254,7 +256,7 @@
         }
 
         .example-bondska {
-            color: var(--primary-color);
+            color: var(--primary);
             font-size: 1.1em;
             font-family: 'Courier New', monospace;
             margin-bottom: 5px;
@@ -263,94 +265,59 @@
         .example-english {
             color: #666;
             font-style: italic;
+            margin-bottom: 5px;
         }
 
-        .phase-selector {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .phase-btn {
-            flex: 1;
-            padding: 10px;
-            background: var(--border-color);
-            color: var(--text-dark);
-            border: 2px solid transparent;
-            border-radius: 6px;
-            cursor: pointer;
+        .phase-badge {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 3px;
+            font-size: 0.85em;
             font-weight: 600;
-            transition: all 0.3s ease;
         }
 
-        .phase-btn.active {
-            background: var(--primary-color);
-            color: var(--text-light);
-            border-color: var(--accent-color);
-        }
-
-        .learning-content {
-            background: var(--bg-light);
-            padding: 20px;
+        .alphabet-item {
+            background: white;
+            padding: 15px;
             border-radius: 6px;
-            margin-bottom: 20px;
-        }
-
-        .learning-content h3 {
-            color: var(--primary-color);
-            margin-bottom: 10px;
-        }
-
-        .rule-list {
-            list-style: none;
-        }
-
-        .rule-list li {
-            padding: 10px;
-            margin: 5px 0;
-            background: var(--text-light);
-            border-left: 3px solid var(--accent-color);
-            border-radius: 4px;
-        }
-
-        footer {
-            background: var(--bg-dark);
-            color: var(--text-light);
+            border: 1px solid var(--border);
             text-align: center;
-            padding: 20px;
+        }
+
+        .alphabet-letter {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .alphabet-info {
             font-size: 0.9em;
+            color: #666;
+            margin-bottom: 5px;
         }
 
-        .copy-btn {
-            padding: 5px 10px;
-            font-size: 0.8em;
-            background: var(--secondary-color);
-        }
-
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
             gap: 15px;
             margin-bottom: 20px;
         }
 
-        .stat-card {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: var(--text-light);
-            padding: 20px;
-            border-radius: 6px;
+        .control-group {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        footer {
+            background: var(--bg-dark);
+            color: white;
             text-align: center;
-        }
-
-        .stat-number {
-            font-size: 2em;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-        .stat-label {
+            padding: 20px;
             font-size: 0.9em;
-            opacity: 0.9;
+            margin-top: 30px;
         }
 
         @media (max-width: 600px) {
@@ -358,20 +325,13 @@
                 font-size: 1.8em;
             }
 
-            .tabs {
-                flex-direction: column;
-            }
-
             .tab-button {
-                border-bottom: none;
-                border-left: 3px solid transparent;
-                padding: 12px;
+                font-size: 0.85em;
+                padding: 12px 15px;
             }
 
-            .tab-button.active {
-                border-bottom: none;
-                border-left-color: var(--primary-color);
-                background: #F0F0F0;
+            .section-title {
+                font-size: 1.4em;
             }
         }
     </style>
@@ -380,16 +340,15 @@
     <div class="container">
         <header>
             <h1>🇸🇪 Bondska Translator</h1>
-            <p>Västerbottnian Dialect - Nordic Dialects Preservation Suite (NDPS)</p>
+            <p>Västerbottnian Dialect - Nordic Dialects Preservation Suite</p>
         </header>
 
         <div class="tabs">
-            <button class="tab-button active" data-tab="translator">Translator</button>
-            <button class="tab-button" data-tab="alphabet">Alphabet</button>
-            <button class="tab-button" data-tab="rules">Rules</button>
-            <button class="tab-button" data-tab="vocabulary">Vocabulary</button>
-            <button class="tab-button" data-tab="learning">Learning</button>
-            <button class="tab-button" data-tab="examples">Examples</button>
+            <button class="tab-button active" onclick="showTab(event, 'translator')">Translator</button>
+            <button class="tab-button" onclick="showTab(event, 'alphabet')">Alphabet</button>
+            <button class="tab-button" onclick="showTab(event, 'rules')">Rules</button>
+            <button class="tab-button" onclick="showTab(event, 'vocabulary')">Vocabulary</button>
+            <button class="tab-button" onclick="showTab(event, 'examples')">Examples</button>
         </div>
 
         <!-- TRANSLATOR TAB -->
@@ -397,33 +356,33 @@
             <h2 class="section-title">🗙️ Swedish ↔ Bondska Translator</h2>
 
             <div class="info-box">
-                <strong>Tip:</strong> Type Swedish text and select your learning phase to see the Bondska translation. Higher phases apply more transformation rules.
+                <strong>💭 Tip:</strong> Enter Swedish text and select your learning phase to see the Bondska translation. Higher phases apply more transformation rules.
             </div>
 
             <div class="controls">
                 <div class="control-group">
-                    <label for="phase-select">Learning Phase:</label>
+                    <label for="phase-select"><strong>Learning Phase:</strong></label>
                     <select id="phase-select">
-                        <option value="1">Phase 1: Pronouns</option>
-                        <option value="2">Phase 2: Vowel Shifts</option>
-                        <option value="3" selected>Phase 3: Apocope & Consonants</option>
-                        <option value="4">Phase 4: Grammar & Fluency</option>
+                        <option value="1">Phase 1: Pronouns (Easy)</option>
+                        <option value="2">Phase 2: Vowel Shifts (Medium)</option>
+                        <option value="3" selected>Phase 3: Apocope & Consonants (Hard)</option>
+                        <option value="4">Phase 4: Grammar & Fluency (Expert)</option>
                     </select>
                 </div>
             </div>
 
             <div class="input-group">
-                <label for="swedish-input">Swedish Text:</label>
-                <textarea id="swedish-input" placeholder="Enter Swedish text here..." spellcheck="false"></textarea>
+                <label for="swedish-input"><strong>Swedish Text:</strong></label>
+                <textarea id="swedish-input" placeholder="Enter Swedish text here... Example: Jag heter Alex" spellcheck="false"></textarea>
             </div>
 
-            <button onclick="translateText()">Translate</button>
-            <button onclick="clearTranslator()">Clear</button>
+            <button onclick="translateText()">🔄 Translate</button>
+            <button onclick="clearTranslator()" style="background: #95a5a6;">🗑️ Clear</button>
 
             <div id="translation-result" class="result">
-                <div class="result-label">Bondska Translation:</div>
-                <div class="result-text" id="bondska-output"></div>
-                <button class="copy-btn" onclick="copyToClipboard('bondska-output')">Copy</button>
+                <div class="result-label">📖 Bondska Translation (Phase <span id="phase-display">1</span>):</div>
+                <div class="result-text" id="bondska-output">Result will appear here</div>
+                <button onclick="copyToClipboard('bondska-output')" style="background: var(--secondary);">📋 Copy to Clipboard</button>
             </div>
         </div>
 
@@ -432,65 +391,32 @@
             <h2 class="section-title">🗣️ Bondska Alphabet & Pronunciation</h2>
 
             <div class="info-box">
-                <strong>Note:</strong> Bondska uses IPA (International Phonetic Alphabet) for precise pronunciation. The characteristic retroflex R [r̤] is unique to Northern Swedish dialects.
+                <strong>Note:</strong> Bondska uses IPA (International Phonetic Alphabet) for precise pronunciation. The characteristic retroflex R [r̙] is unique to Northern Swedish dialects.
             </div>
 
-            <h3 style="color: var(--primary-color); margin-top: 20px;">Consonants</h3>
-            <div class="alphabet-grid" id="consonants-grid"></div>
+            <h3 style="color: var(--primary); margin-top: 20px; margin-bottom: 15px;">Consonants (16 total)</h3>
+            <div class="grid-2" id="consonants-grid"></div>
 
-            <h3 style="color: var(--primary-color); margin-top: 20px;">Vowels</h3>
-            <div class="alphabet-grid" id="vowels-grid"></div>
-
-            <div class="learning-content">
-                <h3>💽 Sound Characteristics</h3>
-                <ul class="rule-list">
-                    <li><strong>Retroflex R:</strong> Deep, guttural sound - characteristic of Bondska</li>
-                    <li><strong>SK Sound:</strong> Becomes retroflexed [ʂ] - softer than standard Swedish</li>
-                    <li><strong>Long Vowels:</strong> Extended duration [Vː] in stressed syllables</li>
-                    <li><strong>Word-Final Consonants:</strong> Always pronounced (unlike Swedish)</li>
-                    <li><strong>Tonal Accents:</strong> Two pitch patterns distinguish word meanings</li>
-                </ul>
-            </div>
+            <h3 style="color: var(--primary); margin-top: 30px; margin-bottom: 15px;">Vowels (9 total)</h3>
+            <div class="grid-2" id="vowels-grid"></div>
         </div>
 
         <!-- RULES TAB -->
         <div id="rules" class="tab-content">
-            <h2 class="section-title">🗙️ Transformation Rules</h2>
-
-            <div class="phase-selector">
-                <button class="phase-btn active" onclick="filterRules(1)">Phase 1</button>
-                <button class="phase-btn" onclick="filterRules(2)">Phase 2</button>
-                <button class="phase-btn" onclick="filterRules(3)">Phase 3</button>
-                <button class="phase-btn" onclick="filterRules(4)">Phase 4</button>
-            </div>
-
+            <h2 class="section-title">🗙️ Transformation Rules by Phase</h2>
             <div id="rules-container"></div>
         </div>
 
         <!-- VOCABULARY TAB -->
         <div id="vocabulary" class="tab-content">
-            <h2 class="section-title">📚 Word Dictionary</h2>
+            <h2 class="section-title">📚 Bondska Dictionary</h2>
 
             <div class="input-group">
-                <label for="vocab-search">Search Dictionary:</label>
-                <input type="text" id="vocab-search" placeholder="Type a Swedish or Bondska word..." onkeyup="searchVocabulary()">
+                <label for="vocab-search"><strong>Search Dictionary:</strong></label>
+                <input type="text" id="vocab-search" placeholder="Search by Swedish word, Bondska, or English..." onkeyup="filterVocabulary()">
             </div>
 
-            <div id="vocabulary-container" class="alphabet-grid"></div>
-        </div>
-
-        <!-- LEARNING TAB -->
-        <div id="learning" class="tab-content">
-            <h2 class="section-title">🎓 4-Phase Learning System</h2>
-
-            <div class="phase-selector">
-                <button class="phase-btn active" onclick="showPhase(1)">Phase 1</button>
-                <button class="phase-btn" onclick="showPhase(2)">Phase 2</button>
-                <button class="phase-btn" onclick="showPhase(3)">Phase 3</button>
-                <button class="phase-btn" onclick="showPhase(4)">Phase 4</button>
-            </div>
-
-            <div id="phase-content"></div>
+            <div id="vocabulary-container" class="grid-2"></div>
         </div>
 
         <!-- EXAMPLES TAB -->
@@ -499,8 +425,8 @@
 
             <div class="controls">
                 <div class="control-group">
-                    <label for="example-filter">Filter by Phase:</label>
-                    <select id="example-filter" onchange="filterExamples()">
+                    <label for="example-phase"><strong>Filter by Phase:</strong></label>
+                    <select id="example-phase" onchange="filterExamples()">
                         <option value="">All Phases</option>
                         <option value="1">Phase 1 Only</option>
                         <option value="2">Phase 2 Only</option>
@@ -514,163 +440,138 @@
         </div>
 
         <footer>
-            <p>🇸🇪 <strong>Bondska Translator v1.0</strong> | Nordic Dialects Preservation Suite (NDPS)</p>
+            <p><strong>🇸🇪 Bondska Translator v1.0</strong> | Nordic Dialects Preservation Suite (NDPS)</p>
             <p>*Hald fram Bondska!* (Keep Bondska alive!) | MIT License</p>
-            <p>Data: <a href="#" style="color: inherit;">vocabulary.json</a> | <a href="#" style="color: inherit;">rules.json</a> | <a href="#" style="color: inherit;">examples.json</a></p>
         </footer>
     </div>
 
     <script>
-        // Sample data (in production, load from JSON files)
-        const vocabularyData = {
-            "hus": { swedish: "hus", bondska: "hus", english: "house", ipa: "[hʉːs]", category: "noun", phase: 1 },
-            "kat": { swedish: "kat", bondska: "kåt", english: "cat", ipa: "[kåːt]", category: "noun", phase: 2 },
-            "bok": { swedish: "bok", bondska: "buk", english: "book", ipa: "[bʊk]", category: "noun", phase: 2 },
-            "jag": { swedish: "jag", bondska: "ja", english: "I", ipa: "[ja]", category: "pronoun", phase: 1 },
-            "du": { swedish: "du", bondska: "dö", english: "you (sg.)", ipa: "[dɔ]", category: "pronoun", phase: 1 },
-            "vi": { swedish: "vi", bondska: "vó", english: "we", ipa: "[vɔ]", category: "pronoun", phase: 1 },
-            "de": { swedish: "de", bondska: "dö", english: "they", ipa: "[dɔ]", category: "pronoun", phase: 1 },
-            "kan": { swedish: "kan", bondska: "kan", english: "can", ipa: "[kan]", category: "verb", phase: 1 },
-            "gå": { swedish: "gå", bondska: "gå", english: "go", ipa: "[gå]", category: "verb", phase: 1 },
-            "inte": { swedish: "inte", bondska: "ikk", english: "not", ipa: "[ɬk]", category: "particle", phase: 1 }
+        // ============= TRANSLATION DATABASE =============
+        const vocabulary = {
+            'hus': { swedish: 'hus', bondska: 'hus', english: 'house', ipa: '[hʉːs]', category: 'noun', phase: 1 },
+            'kat': { swedish: 'kat', bondska: 'kåt', english: 'cat', ipa: '[kåːt]', category: 'noun', phase: 2 },
+            'bok': { swedish: 'bok', bondska: 'buk', english: 'book', ipa: '[bʊk]', category: 'noun', phase: 2 },
+            'träd': { swedish: 'träd', bondska: 'träd', english: 'tree', ipa: '[trɛd]', category: 'noun', phase: 1 },
+            'jag': { swedish: 'jag', bondska: 'ja', english: 'I', ipa: '[ja]', category: 'pronoun', phase: 1 },
+            'du': { swedish: 'du', bondska: 'dö', english: 'you (sg.)', ipa: '[dɔ]', category: 'pronoun', phase: 1 },
+            'vi': { swedish: 'vi', bondska: 'vó', english: 'we', ipa: '[vɔ]', category: 'pronoun', phase: 1 },
+            'de': { swedish: 'de', bondska: 'dö', english: 'they', ipa: '[dɔ]', category: 'pronoun', phase: 1 },
+            'kan': { swedish: 'kan', bondska: 'kan', english: 'can', ipa: '[kan]', category: 'verb', phase: 1 },
+            'gå': { swedish: 'gå', bondska: 'gå', english: 'go', ipa: '[gå]', category: 'verb', phase: 1 },
+            'inte': { swedish: 'inte', bondska: 'ikk', english: 'not', ipa: '[ɬk]', category: 'particle', phase: 1 },
+            'var': { swedish: 'var', bondska: 'vär', english: 'was', ipa: '[vɛr]', category: 'verb', phase: 2 },
+            'och': { swedish: 'och', bondska: 'och', english: 'and', ipa: '[ok]', category: 'conjunction', phase: 1 },
+            'min': { swedish: 'min', bondska: 'mín', english: 'my', ipa: '[mín]', category: 'possessive', phase: 1 },
+            'mor': { swedish: 'mor', bondska: 'mör', english: 'mother', ipa: '[mőr]', category: 'noun', phase: 2 }
         };
 
-        const rulesData = [
-            { id: "p1_jag", phase: 1, name: "Jag → Ja", pattern: "jag", replacement: "ja", explanation: "First person pronoun reduction" },
-            { id: "p1_du", phase: 1, name: "Du → Dö", pattern: "du", replacement: "dö", explanation: "Second person vowel shift" },
-            { id: "p2_a_to_aa", phase: 2, name: "A → Å", pattern: "a", replacement: "å", explanation: "Vowel shift in stressed syllables" },
-            { id: "p2_o_to_u", phase: 2, name: "O → U", pattern: "o", replacement: "u", explanation: "Back vowel closing" },
-            { id: "p3_apocope", phase: 3, name: "Apocope", pattern: "er$", replacement: "", explanation: "Suffix dropping" },
-            { id: "p3_sk", phase: 3, name: "SK → ʂ", pattern: "sk", replacement: "ʂ", explanation: "Retroflexion of consonant cluster" }
+        const rules = [
+            { phase: 1, name: 'Jag → Ja', pattern: /\bjag\b/gi, replacement: 'ja', explanation: 'First person pronoun reduction' },
+            { phase: 1, name: 'Du → Dö', pattern: /\bdu\b/gi, replacement: 'dö', explanation: 'Second person vowel shift' },
+            { phase: 1, name: 'Vi → Vó', pattern: /\bvi\b/gi, replacement: 'vó', explanation: 'First person plural pronoun' },
+            { phase: 1, name: 'De → Dö', pattern: /\bde\b/gi, replacement: 'dö', explanation: 'Third person plural pronoun' },
+            { phase: 1, name: 'Inte → Ikk', pattern: /\binte\b/gi, replacement: 'ikk', explanation: 'Negation marker' },
+            { phase: 1, name: 'Min → Mín', pattern: /\bmin\b/gi, replacement: 'mín', explanation: 'Possessive adjective' },
+            { phase: 1, name: 'Var → Vär', pattern: /\bvar\b/gi, replacement: 'vär', explanation: 'Past tense shift' },
+            { phase: 2, name: 'A → Å', pattern: /a/g, replacement: 'å', explanation: 'Vowel shift in stressed syllables' },
+            { phase: 2, name: 'E → Ä', pattern: /e/g, replacement: 'ä', explanation: 'Mid front vowel opens' },
+            { phase: 2, name: 'O → U', pattern: /o/g, replacement: 'u', explanation: 'Back vowel closes' },
+            { phase: 3, name: 'SK → ʂ', pattern: /sk/gi, replacement: 'ʂ', explanation: 'Consonant cluster retroflexion' },
+            { phase: 3, name: 'Final D pronounced', pattern: /d\s*$/gm, replacement: 'd', explanation: 'Final consonants preserved' },
+            { phase: 3, name: 'Final T pronounced', pattern: /t\s*$/gm, replacement: 't', explanation: 'Final consonants preserved' },
+            { phase: 4, name: 'Past tense vowels', pattern: /gick/g, replacement: 'gåck', explanation: 'Historical vowel restoration' }
         ];
 
-        const examplesData = [
-            { phase: 1, swedish: "Jag heter Alex", bondska: "ja héter Alex", english: "My name is Alex", category: "greeting" },
-            { phase: 1, swedish: "Du är välkommen", bondska: "Dö är välkömmen", english: "You are welcome", category: "greeting" },
-            { phase: 1, swedish: "Vad heter du?", bondska: "Vatt héter dö?", english: "What is your name?", category: "question" },
-            { phase: 2, swedish: "En kat", bondska: "En kåt", english: "A cat", category: "noun" },
-            { phase: 2, swedish: "En bok", bondska: "En buk", english: "A book", category: "noun" },
-            { phase: 3, swedish: "Vi ska gå", bondska: "Vó ʂa gå", english: "We shall go", category: "statement" }
+        const examples = [
+            { phase: 1, swedish: 'Jag heter Alex', bondska: 'ja héter Ålex', english: 'My name is Alex', category: 'greeting' },
+            { phase: 1, swedish: 'Du är här', bondska: 'dö är här', english: 'You are here', category: 'statement' },
+            { phase: 1, swedish: 'Vi går', bondska: 'vó gå', english: 'We go', category: 'verb' },
+            { phase: 1, swedish: 'De går inte', bondska: 'dö gå ikk', english: 'They do not go', category: 'negation' },
+            { phase: 1, swedish: 'Min hund', bondska: 'mín hund', english: 'My dog', category: 'possession' },
+            { phase: 2, swedish: 'En kat', bondska: 'En kåt', english: 'A cat', category: 'noun' },
+            { phase: 2, swedish: 'En bok', bondska: 'En buk', english: 'A book', category: 'noun' },
+            { phase: 2, swedish: 'Kan du se?', bondska: 'Kan dö sä?', english: 'Can you see?', category: 'question' },
+            { phase: 2, swedish: 'Min mor', bondska: 'mín mör', english: 'My mother', category: 'family' },
+            { phase: 3, swedish: 'Vi ska gå', bondska: 'vó ʂa gå', english: 'We shall go', category: 'future' },
+            { phase: 3, swedish: 'Var går du?', bondska: 'vär gå dö?', english: 'Where are you going?', category: 'question' },
+            { phase: 4, swedish: 'Jag gick', bondska: 'ja gåck', english: 'I went', category: 'past' }
         ];
 
-        const alphabetData = {
+        const alphabet = {
             consonants: [
-                { letter: "B", ipa: "[b]", example: "bondska" },
-                { letter: "D", ipa: "[d]", example: "dö" },
-                { letter: "F", ipa: "[f]", example: "far" },
-                { letter: "G", ipa: "[g]", example: "gå" },
-                { letter: "H", ipa: "[h]", example: "här" },
-                { letter: "J", ipa: "[j]", example: "ja" },
-                { letter: "K", ipa: "[k]", example: "kan" },
-                { letter: "L", ipa: "[l]", example: "låg" },
-                { letter: "M", ipa: "[m]", example: "man" },
-                { letter: "N", ipa: "[n]", example: "nej" },
-                { letter: "P", ipa: "[p]", example: "prast" },
-                { letter: "R", ipa: "[r̤]", example: "rö" },
-                { letter: "S", ipa: "[s]", example: "sno" },
-                { letter: "SK", ipa: "[ʂ]", example: "skina" },
-                { letter: "T", ipa: "[t]", example: "ta" },
-                { letter: "V", ipa: "[v]", example: "vi" }
+                { letter: 'B', ipa: '[b]', example: 'bondska' },
+                { letter: 'D', ipa: '[d]', example: 'dö' },
+                { letter: 'F', ipa: '[f]', example: 'far' },
+                { letter: 'G', ipa: '[g]', example: 'gå' },
+                { letter: 'H', ipa: '[h]', example: 'här' },
+                { letter: 'J', ipa: '[j]', example: 'ja' },
+                { letter: 'K', ipa: '[k]', example: 'kan' },
+                { letter: 'L', ipa: '[l]', example: 'låg' },
+                { letter: 'M', ipa: '[m]', example: 'man' },
+                { letter: 'N', ipa: '[n]', example: 'nej' },
+                { letter: 'P', ipa: '[p]', example: 'prast' },
+                { letter: 'R', ipa: '[r̙]', example: 'rö (retroflex)' },
+                { letter: 'S', ipa: '[s]', example: 'sno' },
+                { letter: 'SK', ipa: '[ʂ]', example: 'skina' },
+                { letter: 'T', ipa: '[t]', example: 'ta' },
+                { letter: 'V', ipa: '[v]', example: 'vi' }
             ],
             vowels: [
-                { letter: "A", ipa: "[aː]", example: "hav" },
-                { letter: "Å", ipa: "[åː]", example: "gå" },
-                { letter: "E", ipa: "[eː]", example: "en" },
-                { letter: "Ä", ipa: "[ɛː]", example: "lär" },
-                { letter: "I", ipa: "[iː]", example: "ni" },
-                { letter: "O", ipa: "[uː]", example: "mot" },
-                { letter: "Ö", ipa: "[œː]", example: "för" },
-                { letter: "U", ipa: "[uː]", example: "hus" },
-                { letter: "Y", ipa: "[yː]", example: "ny" }
+                { letter: 'A', ipa: '[aː]', example: 'hav' },
+                { letter: 'Å', ipa: '[åː]', example: 'gå' },
+                { letter: 'E', ipa: '[eː]', example: 'en' },
+                { letter: 'Ä', ipa: '[ɛː]', example: 'lär' },
+                { letter: 'I', ipa: '[iː]', example: 'ni' },
+                { letter: 'O', ipa: '[uː]', example: 'mot' },
+                { letter: 'Ö', ipa: '[œː]', example: 'för' },
+                { letter: 'U', ipa: '[uː]', example: 'hus' },
+                { letter: 'Y', ipa: '[yː]', example: 'ny' }
             ]
         };
 
-        const learningPhases = {
-            1: {
-                title: "Phase 1: Pronoun Shift",
-                description: "Master high-frequency word substitutions",
-                content: "<p><strong>Goal:</strong> Learn basic word substitutions for pronouns and simple verbs.</p><ul class='rule-list'><li>jag → ja (I)</li><li>du → dö (you)</li><li>vi → vó (we)</li><li>inte → ikk (not)</li></ul>",
-                exercises: "Try translating: 'Jag heter Alex', 'Du är här', 'Vi gå här'"
-            },
-            2: {
-                title: "Phase 2: Vowel Shifts",
-                description: "Apply phonetic transformations",
-                content: "<p><strong>Goal:</strong> Understand how vowels change in Bondska.</p><ul class='rule-list'><li>a → å (kat → kåt)</li><li>e → ä (le → lä)</li><li>o → u (bok → buk)</li></ul>",
-                exercises: "Try: 'En kat', 'En bok', 'Min mor leker'"
-            },
-            3: {
-                title: "Phase 3: Apocope & Consonants",
-                description: "Master word endings and consonant changes",
-                content: "<p><strong>Goal:</strong> Handle word endings and consonant transformations.</p><ul class='rule-list'><li>-er → (apocope)</li><li>Final consonants pronounced</li><li>sk → ʂ (retroflexion)</li></ul>",
-                exercises: "Try: 'Vi ska gå', 'Vad går du?', 'Hur går det?'"
-            },
-            4: {
-                title: "Phase 4: Grammar & Fluency",
-                description: "Advanced features and natural speech",
-                content: "<p><strong>Goal:</strong> Achieve fluency and comfortable natural speech.</p><ul class='rule-list'><li>Past tense with vowel shifts</li><li>Gender agreement</li><li>Tonal accents</li><li>Regional variations</li></ul>",
-                exercises: "Try: 'Jag gick', 'Vi var inte här', 'En stor häst'"
-            }
-        };
-
-        // Tab switching
-        document.querySelectorAll('.tab-button').forEach(button => {
-            button.addEventListener('click', function() {
-                const tabName = this.getAttribute('data-tab');
-                showTab(tabName);
-            });
-        });
-
-        function showTab(tabName) {
-            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+        // ============= TAB SWITCHING =============
+        function showTab(e, tabName) {
+            e.preventDefault();
+            
+            // Hide all tabs
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Remove active from all buttons
+            const buttons = document.querySelectorAll('.tab-button');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            // Show selected tab
             document.getElementById(tabName).classList.add('active');
-            event.target.classList.add('active');
-
+            e.target.classList.add('active');
+            
             // Initialize tab content
-            if (tabName === 'alphabet') initializeAlphabet();
-            if (tabName === 'vocabulary') populateVocabulary();
-            if (tabName === 'rules') showRules(1);
-            if (tabName === 'learning') showPhase(1);
-            if (tabName === 'examples') populateExamples();
+            if (tabName === 'alphabet') initAlphabet();
+            if (tabName === 'vocabulary') initVocabulary();
+            if (tabName === 'rules') initRules();
+            if (tabName === 'examples') initExamples();
         }
 
-        // Translator functions
+        // ============= TRANSLATOR =============
         function translateText() {
-            const input = document.getElementById('swedish-input').value;
+            const input = document.getElementById('swedish-input').value.trim();
             const phase = parseInt(document.getElementById('phase-select').value);
-
-            if (!input.trim()) {
-                alert('Please enter Swedish text to translate');
+            
+            if (!input) {
+                alert('💬 Please enter Swedish text to translate!');
                 return;
             }
-
-            // Simple translation logic
+            
+            document.getElementById('phase-display').textContent = phase;
             let output = input;
-            const rules = {
-                'jag': 'ja', 'du': 'dö', 'vi': 'vó', 'de': 'dö',
-                'inte': 'ikk', 'var': 'vär'
-            };
-
-            // Apply Phase 1 rules (always)
-            Object.keys(rules).forEach(key => {
-                const regex = new RegExp('\\b' + key + '\\b', 'gi');
-                output = output.replace(regex, rules[key]);
+            
+            // Apply rules in order by phase
+            rules.forEach(rule => {
+                if (rule.phase <= phase) {
+                    output = output.replace(rule.pattern, rule.replacement);
+                }
             });
-
-            // Apply Phase 2+ vowel shifts
-            if (phase >= 2) {
-                output = output.replace(/\ba([a-z]*)/gi, 'å$1');
-                output = output.replace(/\be([a-z]*)/gi, 'ä$1');
-                output = output.replace(/\bo([a-z]*)/gi, 'u$1');
-            }
-
-            // Apply Phase 3+ changes
-            if (phase >= 3) {
-                output = output.replace(/\bsk/gi, 'ʂ');
-                output = output.replace(/er\b/gi, '');
-            }
-
-            // Show result
+            
             document.getElementById('bondska-output').textContent = output;
             document.getElementById('translation-result').classList.add('show');
         }
@@ -683,128 +584,125 @@
         function copyToClipboard(elementId) {
             const text = document.getElementById(elementId).textContent;
             navigator.clipboard.writeText(text).then(() => {
-                alert('Copied to clipboard!');
+                alert('✅ Copied to clipboard!');
+            }).catch(() => {
+                alert('❌ Could not copy');
             });
         }
 
-        // Alphabet functions
-        function initializeAlphabet() {
-            const consonantGrid = document.getElementById('consonants-grid');
-            const vowelGrid = document.getElementById('vowels-grid');
-
-            consonantGrid.innerHTML = '';
-            alphabetData.consonants.forEach(item => {
-                consonantGrid.innerHTML += `
-                    <div class="alphabet-item">
-                        <div class="alphabet-letter">${item.letter}</div>
-                        <div class="alphabet-info">IPA: ${item.ipa}</div>
-                        <div class="alphabet-info">Example: ${item.example}</div>
-                    </div>
-                `;
-            });
-
-            vowelGrid.innerHTML = '';
-            alphabetData.vowels.forEach(item => {
-                vowelGrid.innerHTML += `
-                    <div class="alphabet-item">
-                        <div class="alphabet-letter">${item.letter}</div>
-                        <div class="alphabet-info">IPA: ${item.ipa}</div>
-                        <div class="alphabet-info">Example: ${item.example}</div>
-                    </div>
-                `;
-            });
-        }
-
-        // Rules functions
-        function showRules(phase) {
-            const container = document.getElementById('rules-container');
-            const filtered = rulesData.filter(r => r.phase <= phase);
-
-            container.innerHTML = filtered.map(rule => `
-                <div class="learning-content">
-                    <h3>${rule.name}</h3>
-                    <p><strong>Pattern:</strong> ${rule.pattern} → ${rule.replacement}</p>
-                    <p><strong>Explanation:</strong> ${rule.explanation}</p>
+        // ============= ALPHABET =============
+        function initAlphabet() {
+            const consonantsGrid = document.getElementById('consonants-grid');
+            const vowelsGrid = document.getElementById('vowels-grid');
+            
+            consonantsGrid.innerHTML = alphabet.consonants.map(c => `
+                <div class="alphabet-item">
+                    <div class="alphabet-letter">${c.letter}</div>
+                    <div class="alphabet-info"><strong>IPA:</strong> ${c.ipa}</div>
+                    <div class="alphabet-info"><strong>Example:</strong> ${c.example}</div>
+                </div>
+            `).join('');
+            
+            vowelsGrid.innerHTML = alphabet.vowels.map(v => `
+                <div class="alphabet-item">
+                    <div class="alphabet-letter">${v.letter}</div>
+                    <div class="alphabet-info"><strong>IPA:</strong> ${v.ipa}</div>
+                    <div class="alphabet-info"><strong>Example:</strong> ${v.example}</div>
                 </div>
             `).join('');
         }
 
-        function filterRules(phase) {
-            showRules(phase);
-            document.querySelectorAll('.phase-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
+        // ============= VOCABULARY =============
+        function initVocabulary() {
+            displayVocabulary(Object.values(vocabulary));
         }
 
-        // Vocabulary functions
-        function populateVocabulary() {
+        function displayVocabulary(words) {
             const container = document.getElementById('vocabulary-container');
-            container.innerHTML = Object.values(vocabularyData).map(word => `
-                <div class="example-box">
-                    <div class="example-swedish">${word.swedish}</div>
-                    <div class="example-bondska">${word.bondska}</div>
-                    <div class="example-english">${word.english}</div>
-                    <div class="alphabet-info">IPA: ${word.ipa} | Phase: ${word.phase}</div>
+            container.innerHTML = words.map(word => `
+                <div class="card">
+                    <h3>${word.swedish}</h3>
+                    <div class="card-content">
+                        <div><strong>Bondska:</strong> ${word.bondska}</div>
+                        <div><strong>English:</strong> ${word.english}</div>
+                        <div><strong>IPA:</strong> ${word.ipa}</div>
+                        <div><strong>Category:</strong> ${word.category}</div>
+                        <div><span class="phase-badge">Phase ${word.phase}</span></div>
+                    </div>
                 </div>
             `).join('');
         }
 
-        function searchVocabulary() {
+        function filterVocabulary() {
             const search = document.getElementById('vocab-search').value.toLowerCase();
-            const items = document.querySelectorAll('#vocabulary-container > div');
-            items.forEach(item => {
-                const text = item.textContent.toLowerCase();
-                item.style.display = text.includes(search) ? 'block' : 'none';
+            const filtered = Object.values(vocabulary).filter(word => 
+                word.swedish.toLowerCase().includes(search) ||
+                word.bondska.toLowerCase().includes(search) ||
+                word.english.toLowerCase().includes(search)
+            );
+            displayVocabulary(filtered);
+        }
+
+        // ============= RULES =============
+        function initRules() {
+            const container = document.getElementById('rules-container');
+            const grouped = {};
+            
+            rules.forEach(rule => {
+                if (!grouped[rule.phase]) grouped[rule.phase] = [];
+                grouped[rule.phase].push(rule);
             });
+            
+            let html = '';
+            Object.keys(grouped).forEach(phase => {
+                html += `<h3 style="color: var(--primary); margin-top: 20px;">Phase ${phase} Rules</h3>`;
+                grouped[phase].forEach(rule => {
+                    html += `
+                        <div class="card" style="margin-bottom: 15px;">
+                            <h4>${rule.name}</h4>
+                            <p><strong>Pattern:</strong> ${rule.pattern.source.replace(/\\/g, '')} → ${rule.replacement}</p>
+                            <p><strong>Explanation:</strong> ${rule.explanation}</p>
+                        </div>
+                    `;
+                });
+            });
+            
+            container.innerHTML = html;
         }
 
-        // Learning functions
-        function showPhase(phase) {
-            const content = document.getElementById('phase-content');
-            const phaseData = learningPhases[phase];
-
-            content.innerHTML = `
-                <h3>${phaseData.title}</h3>
-                <p><em>${phaseData.description}</em></p>
-                <div class="learning-content">
-                    ${phaseData.content}
-                </div>
-                <div class="learning-content">
-                    <h4>📚 Exercises:</h4>
-                    <p>${phaseData.exercises}</p>
-                </div>
-            `;
-
-            document.querySelectorAll('.phase-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelectorAll('.phase-btn')[phase - 1].classList.add('active');
-        }
-
-        // Examples functions
-        function populateExamples() {
-            const container = document.getElementById('examples-container');
-            displayExamples(examplesData, container);
+        // ============= EXAMPLES =============
+        function initExamples() {
+            displayExamples(examples);
         }
 
         function filterExamples() {
-            const filter = document.getElementById('example-filter').value;
-            const container = document.getElementById('examples-container');
-            const filtered = filter ? examplesData.filter(e => e.phase == filter) : examplesData;
-            displayExamples(filtered, container);
+            const phase = document.getElementById('example-phase').value;
+            const filtered = phase ? examples.filter(ex => ex.phase == phase) : examples;
+            displayExamples(filtered);
         }
 
-        function displayExamples(examples, container) {
-            container.innerHTML = examples.map(ex => `
-                <div class="example-box">
-                    <div class="example-swedish">🇸🇪 Swedish: ${ex.swedish}</div>
-                    <div class="example-bondska킻 Bondska: ${ex.bondska}</div>
-                    <div class="example-english🇚en English: ${ex.english}</div>
-                    <div class="alphabet-info">Phase: ${ex.phase} | Category: ${ex.category}</div>
+        function displayExamples(items) {
+            const container = document.getElementById('examples-container');
+            container.innerHTML = items.map(ex => `
+                <div class="example-item">
+                    <div class="example-swedish">🇸🇪 <strong>${ex.swedish}</strong></div>
+                    <div class="example-bondska">킻 <strong>${ex.bondska}</strong></div>
+                    <div class="example-english🇚en <em>${ex.english}</em></div>
+                    <div>
+                        <span class="phase-badge" style="margin-right: 10px;">Phase ${ex.phase}</span>
+                        <span style="color: #666; font-size: 0.9em;">Category: ${ex.category}</span>
+                    </div>
                 </div>
             `).join('');
         }
 
-        // Initialize on load
+        // Initialize on page load
         window.addEventListener('DOMContentLoaded', function() {
-            console.log('Bondska Translator v1.0 loaded');
+            console.log('🇸🇪 Bondska Translator v1.0 loaded successfully!');
+            initAlphabet();
+            initVocabulary();
+            initRules();
+            initExamples();
         });
     </script>
 </body>
