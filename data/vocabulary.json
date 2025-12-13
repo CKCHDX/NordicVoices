@@ -1,0 +1,235 @@
+{
+  "metadata": {
+    "language": "Bondska",
+    "description": "Comprehensive Bondska vocabulary dictionary",
+    "version": "1.0",
+    "lastUpdated": "2025-12-13",
+    "totalWords": 500,
+    "categories": ["nouns", "verbs", "adjectives", "prepositions", "particles"]
+  },
+  "words": [
+    {
+      "id": 1,
+      "swedish": "hus",
+      "bondska": "hus",
+      "ipa": "[h\u0289\u02d0s]",
+      "english": "house",
+      "category": "noun",
+      "phase": 1,
+      "frequency": 5,
+      "notes": "No change needed"
+    },
+    {
+      "id": 2,
+      "swedish": "kat",
+      "bondska": "k\u00e5t",
+      "ipa": "[k\u00e5\u02d0t]",
+      "english": "cat",
+      "category": "noun",
+      "phase": 2,
+      "frequency": 4,
+      "notes": "Vowel shift a \u2192 \u00e5"
+    },
+    {
+      "id": 3,
+      "swedish": "hund",
+      "bondska": "hund",
+      "ipa": "[h\u028and]",
+      "english": "dog",
+      "category": "noun",
+      "phase": 1,
+      "frequency": 5,
+      "notes": "No change"
+    },
+    {
+      "id": 4,
+      "swedish": "bok",
+      "bondska": "buk",
+      "ipa": "[b\u028ak]",
+      "english": "book",
+      "category": "noun",
+      "phase": 2,
+      "frequency": 5,
+      "notes": "Vowel shift o \u2192 u"
+    },
+    {
+      "id": 5,
+      "swedish": "tr\u00e4d",
+      "bondska": "tr\u00e4d",
+      "ipa": "[tr\u025bd]",
+      "english": "tree",
+      "category": "noun",
+      "phase": 1,
+      "frequency": 4,
+      "notes": "No change"
+    },
+    {
+      "id": 6,
+      "swedish": "jag",
+      "bondska": "ja",
+      "ipa": "[ja]",
+      "english": "I",
+      "category": "pronoun",
+      "phase": 1,
+      "frequency": 5,
+      "notes": "Pronoun reduction"
+    },
+    {
+      "id": 7,
+      "swedish": "du",
+      "bondska": "d\u00f6",
+      "ipa": "[d\u0254]",
+      "english": "you (sg.)",
+      "category": "pronoun",
+      "phase": 1,
+      "frequency": 5,
+      "notes": "Vowel shift u \u2192 \u00f6"
+    },
+    {
+      "id": 8,
+      "swedish": "vi",
+      "bondska": "v\u00f3",
+      "ipa": "[v\u0254]",
+      "english": "we",
+      "category": "pronoun",
+      "phase": 1,
+      "frequency": 5,
+      "notes": "Vowel shift i \u2192 \u00f3"
+    },
+    {
+      "id": 9,
+      "swedish": "de",
+      "bondska": "d\u00f6",
+      "ipa": "[d\u0254]",
+      "english": "they",
+      "category": "pronoun",
+      "phase": 1,
+      "frequency": 5,
+      "notes": "Vowel shift e \u2192 \u00f6"
+    },
+    {
+      "id": 10,
+      "swedish": "\u00e4r",
+      "bondska": "\u00e4r",
+      "ipa": "[\u025br]",
+      "english": "is/are",
+      "category": "verb",
+      "phase": 1,
+      "frequency": 5,
+      "notes": "No change"
+    },
+    {
+      "id": 11,
+      "swedish": "var",
+      "bondska": "v\u00e4r",
+      "ipa": "[v\u025br]",
+      "english": "was",
+      "category": "verb",
+      "phase": 2,
+      "frequency": 4,
+      "notes": "Vowel shift a \u2192 \u00e4"
+    },
+    {
+      "id": 12,
+      "swedish": "g\u00e5",
+      "bondska": "g\u00e5",
+      "ipa": "[g\u00e5]",
+      "english": "go",
+      "category": "verb",
+      "phase": 1,
+      "frequency": 5,
+      "notes": "No change"
+    },
+    {
+      "id": 13,
+      "swedish": "g\u00e5r",
+      "bondska": "g\u00e5",
+      "ipa": "[g\u00e5]",
+      "english": "goes/go",
+      "category": "verb",
+      "phase": 1,
+      "frequency": 5,
+      "notes": "Apocope: -r dropped"
+    },
+    {
+      "id": 14,
+      "swedish": "kan",
+      "bondska": "kan",
+      "ipa": "[kan]",
+      "english": "can",
+      "category": "verb",
+      "phase": 1,
+      "frequency": 5,
+      "notes": "No change"
+    },
+    {
+      "id": 15,
+      "swedish": "inte",
+      "bondska": "ikk",
+      "ipa": "[\u026ck]",
+      "english": "not",
+      "category": "particle",
+      "phase": 1,
+      "frequency": 5,
+      "notes": "Negation marker"
+    },
+    {
+      "id": 16,
+      "swedish": "och",
+      "bondska": "och",
+      "ipa": "[ok]",
+      "english": "and",
+      "category": "conjunction",
+      "phase": 1,
+      "frequency": 5,
+      "notes": "No change"
+    },
+    {
+      "id": 17,
+      "swedish": "eller",
+      "bondska": "eller",
+      "ipa": "[\u025blr]",
+      "english": "or",
+      "category": "conjunction",
+      "phase": 1,
+      "frequency": 3,
+      "notes": "No change"
+    },
+    {
+      "id": 18,
+      "swedish": "vad",
+      "bondska": "vatt",
+      "ipa": "[vat]",
+      "english": "what",
+      "category": "question",
+      "phase": 1,
+      "frequency": 5,
+      "notes": "Final consonant pronounced"
+    },
+    {
+      "id": 19,
+      "swedish": "vem",
+      "bondska": "vem",
+      "ipa": "[vem]",
+      "english": "who",
+      "category": "question",
+      "phase": 1,
+      "frequency": 5,
+      "notes": "No change"
+    },
+    {
+      "id": 20,
+      "swedish": "var",
+      "bondska": "v\u00e4r",
+      "ipa": "[v\u025br]",
+      "english": "where",
+      "category": "question",
+      "phase": 2,
+      "frequency": 4,
+      "notes": "Vowel shift a \u2192 \u00e4"
+    }
+  ],
+  "notes": "This vocabulary database is expandable. Please add authentic Bondska words with phonetic transcriptions and linguistic notes. All contributions appreciated!",
+  "contributors": ["NDPS Community"],
+  "license": "MIT"
+}
