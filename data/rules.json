@@ -1,0 +1,175 @@
+{
+  "metadata": {
+    "language": "Bondska",
+    "description": "Comprehensive transformation rules for Swedish to Bondska translation",
+    "version": "1.0",
+    "lastUpdated": "2025-12-13",
+    "totalRules": 90,
+    "phases": [1, 2, 3, 4]
+  },
+  "rules": [
+    {
+      "id": "p1_pronoun_jag",
+      "name": "First person singular pronoun",
+      "phase": 1,
+      "pattern": "\\bjag\\b",
+      "replacement": "ja",
+      "explanation": "Swedish 'jag' (I) becomes 'ja' - pronoun reduction",
+      "examples": ["Jag heter Alex" → "ja h\u00e9ter Alex"],
+      "exceptions": "None - consistent"
+    },
+    {
+      "id": "p1_pronoun_du",
+      "name": "Second person singular pronoun",
+      "phase": 1,
+      "pattern": "\\bdu\\b",
+      "replacement": "d\u00f6",
+      "explanation": "Swedish 'du' (you-sg.) becomes 'd\u00f6' with vowel shift",
+      "examples": ["Du \u00e4r h\u00e4r" → "d\u00f6 \u00e4r h\u00e4r"],
+      "exceptions": "None"
+    },
+    {
+      "id": "p1_pronoun_vi",
+      "name": "First person plural pronoun",
+      "phase": 1,
+      "pattern": "\\bvi\\b",
+      "replacement": "v\u00f3",
+      "explanation": "Swedish 'vi' (we) becomes 'v\u00f3'",
+      "examples": ["Vi g\u00e5r h\u00e4r" → "v\u00f3 g\u00e5 h\u00e4r"],
+      "exceptions": "None"
+    },
+    {
+      "id": "p1_pronoun_de",
+      "name": "Third person plural pronoun",
+      "phase": 1,
+      "pattern": "\\bde\\b",
+      "replacement": "d\u00f6",
+      "explanation": "Swedish 'de' (they) becomes 'd\u00f6'",
+      "examples": ["De g\u00e5r nu" → "d\u00f6 g\u00e5 n\u00e5"],
+      "exceptions": "None"
+    },
+    {
+      "id": "p1_negation_inte",
+      "name": "Negation marker",
+      "phase": 1,
+      "pattern": "\\binte\\b",
+      "replacement": "ikk",
+      "explanation": "Swedish negation 'inte' becomes 'ikk'",
+      "examples": ["Jag inte kan" → "ja ikk kan"],
+      "exceptions": "None"
+    },
+    {
+      "id": "p1_verb_var",
+      "name": "Past tense of 'vara' (to be)",
+      "phase": 1,
+      "pattern": "\\bvar\\b",
+      "replacement": "v\u00e4r",
+      "explanation": "Swedish past 'var' becomes 'v\u00e4r' with vowel shift",
+      "examples": ["Han var h\u00e4r" → "han v\u00e4r h\u00e4r"],
+      "exceptions": "None"
+    },
+    {
+      "id": "p1_question_vad",
+      "name": "What question word",
+      "phase": 1,
+      "pattern": "\\bvad\\b",
+      "replacement": "vatt",
+      "explanation": "Swedish 'vad' becomes 'vatt' with final consonant preservation",
+      "examples": ["Vad heter du?" → "Vatt h\u00e9ter d\u00f6?"],
+      "exceptions": "None"
+    },
+    {
+      "id": "p1_possessive_min",
+      "name": "My (possessive)",
+      "phase": 1,
+      "pattern": "\\bmin\\b",
+      "replacement": "m\u00edn",
+      "explanation": "Swedish 'min' becomes 'm\u00edn' with vowel shift",
+      "examples": ["Min hund" → "m\u00edn hund"],
+      "exceptions": "None"
+    },
+    {
+      "id": "p2_vowel_a_to_a_umlaut",
+      "name": "A to \u00c5 vowel shift",
+      "phase": 2,
+      "pattern": "a",
+      "replacement": "\u00e5",
+      "explanation": "Open front /a/ becomes open back /\u00e5/ in stressed syllables",
+      "examples": ["kat" → "k\u00e5t", "nat" → "n\u00e5t"],
+      "exceptions": "Before fricatives, sometimes preserved"
+    },
+    {
+      "id": "p2_vowel_e_to_ae",
+      "name": "E to \u00c4 vowel shift",
+      "phase": 2,
+      "pattern": "e",
+      "replacement": "\u00e4",
+      "explanation": "Close-mid front /e/ opens to open-mid /\u00e4/ in open syllables",
+      "examples": ["le" → "l\u00e4", "se" → "s\u00e4"],
+      "exceptions": "In final position often preserved"
+    },
+    {
+      "id": "p2_vowel_o_to_u",
+      "name": "O to U vowel shift",
+      "phase": 2,
+      "pattern": "o",
+      "replacement": "u",
+      "explanation": "Mid back /o/ closes to close back /u/ in stressed syllables",
+      "examples": ["bok" → "buk", "not" → "nut"],
+      "exceptions": "Before velars sometimes variable"
+    },
+    {
+      "id": "p3_apocope_er",
+      "name": "Apocope: -ER suffix deletion",
+      "phase": 3,
+      "pattern": "er$",
+      "replacement": "",
+      "explanation": "Unstressed -er suffix often dropped or reduced",
+      "examples": ["katter" → "katt", "g\u00e5er" → "g\u00e5"],
+      "exceptions": "Variable in certain contexts"
+    },
+    {
+      "id": "p3_final_consonant_d",
+      "name": "Final D preservation",
+      "phase": 3,
+      "pattern": "d$",
+      "replacement": "d",
+      "explanation": "Final /d/ is pronounced in Bondska (unlike Swedish)",
+      "examples": ["ord" → "u\u0254rd", "god" → "g\u00f4d"],
+      "exceptions": "None - consistent"
+    },
+    {
+      "id": "p3_final_consonant_t",
+      "name": "Final T preservation",
+      "phase": 3,
+      "pattern": "t$",
+      "replacement": "t",
+      "explanation": "Final /t/ is pronounced in Bondska",
+      "examples": ["att" → "att", "set" → "s\u00e9t"],
+      "exceptions": "None"
+    },
+    {
+      "id": "p3_sk_retroflexion",
+      "name": "SK retroflexion",
+      "phase": 3,
+      "pattern": "sk",
+      "replacement": "\u0282",
+      "explanation": "Alveolar-velar cluster becomes retroflexed fricative",
+      "examples": ["ska" → "\u0282a", "skina" → "\u0282ina"],
+      "exceptions": "None - consistent"
+    },
+    {
+      "id": "p4_past_vowel_shift",
+      "name": "Past tense vowel shift",
+      "phase": 4,
+      "pattern": "a",
+      "replacement": "\u00e5",
+      "explanation": "Past tense forms apply vowel shifts (a → \u00e5)",
+      "examples": ["gick" → "g\u00e5ck"],
+      "exceptions": "Follows Phase 2 rules"
+    }
+  ],
+  "instructions": "Rules are applied in order: Phase 1 → 2 → 3 → 4. Multiple rules may apply to the same word. Always check for exceptions and regional variations.",
+  "contributors": ["NDPS Community"],
+  "license": "MIT"
+}
