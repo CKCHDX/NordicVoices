@@ -211,7 +211,7 @@
 
         .grid-2 {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 15px;
             margin-bottom: 20px;
         }
@@ -353,10 +353,10 @@
 
         <!-- TRANSLATOR TAB -->
         <div id="translator" class="tab-content active">
-            <h2 class="section-title">🗙️ Swedish ↔ Bondska Translator</h2>
+            <h2 class="section-title">🗹️ Swedish ↔ Bondska Translator</h2>
 
             <div class="info-box">
-                <strong>💭 Tip:</strong> Enter Swedish text and select your learning phase to see the Bondska translation. Higher phases apply more transformation rules.
+                <strong>💭 Tip:</strong> Enter Swedish text to see the Bondska translation with correct vowel shifts (e→ä, a→å, etc.). Example: "Hej jag heter" becomes "Häj jå hätär".
             </div>
 
             <div class="controls">
@@ -365,22 +365,22 @@
                     <select id="phase-select">
                         <option value="1">Phase 1: Pronouns (Easy)</option>
                         <option value="2">Phase 2: Vowel Shifts (Medium)</option>
-                        <option value="3" selected>Phase 3: Apocope & Consonants (Hard)</option>
-                        <option value="4">Phase 4: Grammar & Fluency (Expert)</option>
+                        <option value="3" selected>Phase 3: Advanced (Hard)</option>
+                        <option value="4">Phase 4: Full Bondska (Expert)</option>
                     </select>
                 </div>
             </div>
 
             <div class="input-group">
                 <label for="swedish-input"><strong>Swedish Text:</strong></label>
-                <textarea id="swedish-input" placeholder="Enter Swedish text here... Example: Jag heter Alex" spellcheck="false"></textarea>
+                <textarea id="swedish-input" placeholder="Enter Swedish text here... Example: Hej jag heter Alex" spellcheck="false"></textarea>
             </div>
 
             <button onclick="translateText()">🔄 Translate</button>
             <button onclick="clearTranslator()" style="background: #95a5a6;">🗑️ Clear</button>
 
             <div id="translation-result" class="result">
-                <div class="result-label">📖 Bondska Translation (Phase <span id="phase-display">1</span>):</div>
+                <div class="result-label">📖 Bondska Translation (Phase <span id="phase-display">3</span>):</div>
                 <div class="result-text" id="bondska-output">Result will appear here</div>
                 <button onclick="copyToClipboard('bondska-output')" style="background: var(--secondary);">📋 Copy to Clipboard</button>
             </div>
@@ -391,19 +391,20 @@
             <h2 class="section-title">🗣️ Bondska Alphabet & Pronunciation</h2>
 
             <div class="info-box">
-                <strong>Note:</strong> Bondska uses IPA (International Phonetic Alphabet) for precise pronunciation. The characteristic retroflex R [r̙] is unique to Northern Swedish dialects.
+                <strong>Complete Bondska Alphabet (26 letters):</strong><br>
+                <span style="font-size: 1.2em; font-weight: bold; color: var(--primary);">A, Â, B, D, E, F, G, H, I, J, K, L, M, N, O, Ô, P, R, S, T, U, V, Y, Å, Ä, Ö</span>
             </div>
 
-            <h3 style="color: var(--primary); margin-top: 20px; margin-bottom: 15px;">Consonants (16 total)</h3>
+            <h3 style="color: var(--primary); margin-top: 20px; margin-bottom: 15px;">Consonants (13 total)</h3>
             <div class="grid-2" id="consonants-grid"></div>
 
-            <h3 style="color: var(--primary); margin-top: 30px; margin-bottom: 15px;">Vowels (9 total)</h3>
+            <h3 style="color: var(--primary); margin-top: 30px; margin-bottom: 15px;">Vowels (13 total)</h3>
             <div class="grid-2" id="vowels-grid"></div>
         </div>
 
         <!-- RULES TAB -->
         <div id="rules" class="tab-content">
-            <h2 class="section-title">🗙️ Transformation Rules by Phase</h2>
+            <h2 class="section-title">🗹️ Transformation Rules by Phase</h2>
             <div id="rules-container"></div>
         </div>
 
@@ -421,7 +422,7 @@
 
         <!-- EXAMPLES TAB -->
         <div id="examples" class="tab-content">
-            <h2 class="section-title">📤 50+ Example Translations</h2>
+            <h2 class="section-title">📤 Translation Examples</h2>
 
             <div class="controls">
                 <div class="control-group">
@@ -440,112 +441,121 @@
         </div>
 
         <footer>
-            <p><strong>🇸🇪 Bondska Translator v1.0</strong> | Nordic Dialects Preservation Suite (NDPS)</p>
+            <p><strong>🇸🇪 Bondska Translator v1.1</strong> | Nordic Dialects Preservation Suite (NDPS)</p>
             <p>*Hald fram Bondska!* (Keep Bondska alive!) | MIT License</p>
         </footer>
     </div>
 
     <script>
-        // ============= TRANSLATION DATABASE =============
-        const vocabulary = {
-            'hus': { swedish: 'hus', bondska: 'hus', english: 'house', ipa: '[hʉːs]', category: 'noun', phase: 1 },
-            'kat': { swedish: 'kat', bondska: 'kåt', english: 'cat', ipa: '[kåːt]', category: 'noun', phase: 2 },
-            'bok': { swedish: 'bok', bondska: 'buk', english: 'book', ipa: '[bʊk]', category: 'noun', phase: 2 },
-            'träd': { swedish: 'träd', bondska: 'träd', english: 'tree', ipa: '[trɛd]', category: 'noun', phase: 1 },
-            'jag': { swedish: 'jag', bondska: 'ja', english: 'I', ipa: '[ja]', category: 'pronoun', phase: 1 },
-            'du': { swedish: 'du', bondska: 'dö', english: 'you (sg.)', ipa: '[dɔ]', category: 'pronoun', phase: 1 },
-            'vi': { swedish: 'vi', bondska: 'vó', english: 'we', ipa: '[vɔ]', category: 'pronoun', phase: 1 },
-            'de': { swedish: 'de', bondska: 'dö', english: 'they', ipa: '[dɔ]', category: 'pronoun', phase: 1 },
-            'kan': { swedish: 'kan', bondska: 'kan', english: 'can', ipa: '[kan]', category: 'verb', phase: 1 },
-            'gå': { swedish: 'gå', bondska: 'gå', english: 'go', ipa: '[gå]', category: 'verb', phase: 1 },
-            'inte': { swedish: 'inte', bondska: 'ikk', english: 'not', ipa: '[ɬk]', category: 'particle', phase: 1 },
-            'var': { swedish: 'var', bondska: 'vär', english: 'was', ipa: '[vɛr]', category: 'verb', phase: 2 },
-            'och': { swedish: 'och', bondska: 'och', english: 'and', ipa: '[ok]', category: 'conjunction', phase: 1 },
-            'min': { swedish: 'min', bondska: 'mín', english: 'my', ipa: '[mín]', category: 'possessive', phase: 1 },
-            'mor': { swedish: 'mor', bondska: 'mör', english: 'mother', ipa: '[mőr]', category: 'noun', phase: 2 }
-        };
-
-        const rules = [
-            { phase: 1, name: 'Jag → Ja', pattern: /\bjag\b/gi, replacement: 'ja', explanation: 'First person pronoun reduction' },
-            { phase: 1, name: 'Du → Dö', pattern: /\bdu\b/gi, replacement: 'dö', explanation: 'Second person vowel shift' },
-            { phase: 1, name: 'Vi → Vó', pattern: /\bvi\b/gi, replacement: 'vó', explanation: 'First person plural pronoun' },
-            { phase: 1, name: 'De → Dö', pattern: /\bde\b/gi, replacement: 'dö', explanation: 'Third person plural pronoun' },
-            { phase: 1, name: 'Inte → Ikk', pattern: /\binte\b/gi, replacement: 'ikk', explanation: 'Negation marker' },
-            { phase: 1, name: 'Min → Mín', pattern: /\bmin\b/gi, replacement: 'mín', explanation: 'Possessive adjective' },
-            { phase: 1, name: 'Var → Vär', pattern: /\bvar\b/gi, replacement: 'vär', explanation: 'Past tense shift' },
-            { phase: 2, name: 'A → Å', pattern: /a/g, replacement: 'å', explanation: 'Vowel shift in stressed syllables' },
-            { phase: 2, name: 'E → Ä', pattern: /e/g, replacement: 'ä', explanation: 'Mid front vowel opens' },
-            { phase: 2, name: 'O → U', pattern: /o/g, replacement: 'u', explanation: 'Back vowel closes' },
-            { phase: 3, name: 'SK → ʂ', pattern: /sk/gi, replacement: 'ʂ', explanation: 'Consonant cluster retroflexion' },
-            { phase: 3, name: 'Final D pronounced', pattern: /d\s*$/gm, replacement: 'd', explanation: 'Final consonants preserved' },
-            { phase: 3, name: 'Final T pronounced', pattern: /t\s*$/gm, replacement: 't', explanation: 'Final consonants preserved' },
-            { phase: 4, name: 'Past tense vowels', pattern: /gick/g, replacement: 'gåck', explanation: 'Historical vowel restoration' }
-        ];
-
-        const examples = [
-            { phase: 1, swedish: 'Jag heter Alex', bondska: 'ja héter Ålex', english: 'My name is Alex', category: 'greeting' },
-            { phase: 1, swedish: 'Du är här', bondska: 'dö är här', english: 'You are here', category: 'statement' },
-            { phase: 1, swedish: 'Vi går', bondska: 'vó gå', english: 'We go', category: 'verb' },
-            { phase: 1, swedish: 'De går inte', bondska: 'dö gå ikk', english: 'They do not go', category: 'negation' },
-            { phase: 1, swedish: 'Min hund', bondska: 'mín hund', english: 'My dog', category: 'possession' },
-            { phase: 2, swedish: 'En kat', bondska: 'En kåt', english: 'A cat', category: 'noun' },
-            { phase: 2, swedish: 'En bok', bondska: 'En buk', english: 'A book', category: 'noun' },
-            { phase: 2, swedish: 'Kan du se?', bondska: 'Kan dö sä?', english: 'Can you see?', category: 'question' },
-            { phase: 2, swedish: 'Min mor', bondska: 'mín mör', english: 'My mother', category: 'family' },
-            { phase: 3, swedish: 'Vi ska gå', bondska: 'vó ʂa gå', english: 'We shall go', category: 'future' },
-            { phase: 3, swedish: 'Var går du?', bondska: 'vär gå dö?', english: 'Where are you going?', category: 'question' },
-            { phase: 4, swedish: 'Jag gick', bondska: 'ja gåck', english: 'I went', category: 'past' }
-        ];
-
+        // ============= BONDSKA ALPHABET =============
+        // Complete: A, Â, B, D, E, F, G, H, I, J, K, L, M, N, O, Ô, P, R, S, T, U, V, Y, Å, Ä, Ö
+        
         const alphabet = {
             consonants: [
                 { letter: 'B', ipa: '[b]', example: 'bondska' },
-                { letter: 'D', ipa: '[d]', example: 'dö' },
-                { letter: 'F', ipa: '[f]', example: 'far' },
-                { letter: 'G', ipa: '[g]', example: 'gå' },
-                { letter: 'H', ipa: '[h]', example: 'här' },
-                { letter: 'J', ipa: '[j]', example: 'ja' },
-                { letter: 'K', ipa: '[k]', example: 'kan' },
-                { letter: 'L', ipa: '[l]', example: 'låg' },
-                { letter: 'M', ipa: '[m]', example: 'man' },
-                { letter: 'N', ipa: '[n]', example: 'nej' },
-                { letter: 'P', ipa: '[p]', example: 'prast' },
-                { letter: 'R', ipa: '[r̙]', example: 'rö (retroflex)' },
-                { letter: 'S', ipa: '[s]', example: 'sno' },
-                { letter: 'SK', ipa: '[ʂ]', example: 'skina' },
-                { letter: 'T', ipa: '[t]', example: 'ta' },
-                { letter: 'V', ipa: '[v]', example: 'vi' }
+                { letter: 'D', ipa: '[d]', example: 'dö (you)' },
+                { letter: 'F', ipa: '[f]', example: 'far (father)' },
+                { letter: 'G', ipa: '[g]', example: 'gå (go)' },
+                { letter: 'H', ipa: '[h]', example: 'häj (hej)' },
+                { letter: 'J', ipa: '[j]', example: 'jå (jag)' },
+                { letter: 'K', ipa: '[k]', example: 'kan (can)' },
+                { letter: 'L', ipa: '[l]', example: 'lång (long)' },
+                { letter: 'M', ipa: '[m]', example: 'man (man)' },
+                { letter: 'N', ipa: '[n]', example: 'nôg (nog)' },
+                { letter: 'P', ipa: '[p]', example: 'påsk (easter)' },
+                { letter: 'R', ipa: '[r̝]', example: 'röd (retroflex)' },
+                { letter: 'S', ipa: '[s]', example: 'så (så)' },
+                { letter: 'T', ipa: '[t]', example: 'ta (take)' },
+                { letter: 'V', ipa: '[v]', example: 'vó (vi)' }
             ],
             vowels: [
-                { letter: 'A', ipa: '[aː]', example: 'hav' },
-                { letter: 'Å', ipa: '[åː]', example: 'gå' },
-                { letter: 'E', ipa: '[eː]', example: 'en' },
-                { letter: 'Ä', ipa: '[ɛː]', example: 'lär' },
-                { letter: 'I', ipa: '[iː]', example: 'ni' },
-                { letter: 'O', ipa: '[uː]', example: 'mot' },
-                { letter: 'Ö', ipa: '[œː]', example: 'för' },
-                { letter: 'U', ipa: '[uː]', example: 'hus' },
-                { letter: 'Y', ipa: '[yː]', example: 'ny' }
+                { letter: 'A', ipa: '[a]', example: 'han (han)' },
+                { letter: 'Â', ipa: '[ɑː]', example: 'gâ (gå)' },
+                { letter: 'E', ipa: '[e]', example: 'men (men)' },
+                { letter: 'I', ipa: '[i]', example: 'ni (ni)' },
+                { letter: 'O', ipa: '[o]', example: 'hon (hon)' },
+                { letter: 'Ô', ipa: '[oː]', example: 'nôg (nog)' },
+                { letter: 'U', ipa: '[ʉ]', example: 'ut (ut)' },
+                { letter: 'Y', ipa: '[y]', example: 'ny (ny)' },
+                { letter: 'Å', ipa: '[ɔ]', example: 'jå (jag)' },
+                { letter: 'Ä', ipa: '[æ]', example: 'hätär (heter)' },
+                { letter: 'Ö', ipa: '[œ]', example: 'dö (du)' }
             ]
         };
+
+        // ============= TRANSFORMATION RULES =============
+        const rules = [
+            // Phase 1: Pronouns and Basic Words
+            { phase: 1, name: 'Jag → Jå', pattern: /\bjag\b/gi, replacement: 'jå', explanation: 'First person pronoun: a→å' },
+            { phase: 1, name: 'Du → Dö', pattern: /\bdu\b/gi, replacement: 'dö', explanation: 'Second person pronoun: u→ö' },
+            { phase: 1, name: 'Vi → Vó', pattern: /\bvi\b/gi, replacement: 'vó', explanation: 'First person plural: i→ó' },
+            { phase: 1, name: 'De → Dö', pattern: /\bde\b/gi, replacement: 'dö', explanation: 'Third person plural' },
+            { phase: 1, name: 'Inte → Ikk', pattern: /\binte\b/gi, replacement: 'ikk', explanation: 'Negation marker reduction' },
+            { phase: 1, name: 'Min → Mîn', pattern: /\bmin\b/gi, replacement: 'mîn', explanation: 'Possessive with circumflex' },
+            { phase: 1, name: 'Var → Vâr', pattern: /\bvar\b/gi, replacement: 'vâr', explanation: 'Past tense with circumflex' },
+            
+            // Phase 2: Vowel Shifts (Swedish → Bondska)
+            { phase: 2, name: 'E → Ä', pattern: /e/g, replacement: 'ä', explanation: 'Mid front vowel opens: e→ä (heter→hätär)' },
+            { phase: 2, name: 'Hej → Häj', pattern: /\bhej\b/gi, replacement: 'häj', explanation: 'Greeting: e→ä' },
+            { phase: 2, name: 'A → Å (stressed)', pattern: /\ba([a-zåäö]*?)\b/gi, replacement: (match, rest) => 'å' + rest, explanation: 'Initial a→å in stressed syllables' },
+            
+            // Phase 3: Advanced transformations
+            { phase: 3, name: 'O → Ô (long)', pattern: /o([g|k|n])/gi, replacement: 'ô$1', explanation: 'Long o→ô before g/k/n (nog→nôg)' },
+            { phase: 3, name: 'SK → ʂ', pattern: /sk/gi, replacement: 'ʂ', explanation: 'Retroflexion of sk' },
+            
+            // Phase 4: Full Bondska features
+            { phase: 4, name: 'Final -er → -är', pattern: /er\b/g, replacement: 'är', explanation: 'Verb ending shift' },
+            { phase: 4, name: 'Gå → Gâ', pattern: /\bgå\b/gi, replacement: 'gâ', explanation: 'Verb with circumflex å' }
+        ];
+
+        // ============= VOCABULARY =============
+        const vocabulary = {
+            'jag': { swedish: 'jag', bondska: 'jå', english: 'I', ipa: '[jɔ]', category: 'pronoun', phase: 1 },
+            'du': { swedish: 'du', bondska: 'dö', english: 'you (sg.)', ipa: '[dœ]', category: 'pronoun', phase: 1 },
+            'vi': { swedish: 'vi', bondska: 'vó', english: 'we', ipa: '[vo]', category: 'pronoun', phase: 1 },
+            'de': { swedish: 'de', bondska: 'dö', english: 'they', ipa: '[dœ]', category: 'pronoun', phase: 1 },
+            'hej': { swedish: 'hej', bondska: 'häj', english: 'hello/hi', ipa: '[hæj]', category: 'greeting', phase: 2 },
+            'heter': { swedish: 'heter', bondska: 'hätär', english: 'am called/named', ipa: '[hætær]', category: 'verb', phase: 2 },
+            'inte': { swedish: 'inte', bondska: 'ikk', english: 'not', ipa: '[ɪkː]', category: 'particle', phase: 1 },
+            'min': { swedish: 'min', bondska: 'mîn', english: 'my', ipa: '[miːn]', category: 'possessive', phase: 1 },
+            'var': { swedish: 'var', bondska: 'vâr', english: 'was', ipa: '[vɑːr]', category: 'verb', phase: 1 },
+            'gå': { swedish: 'gå', bondska: 'gâ', english: 'go/walk', ipa: '[gɑː]', category: 'verb', phase: 4 },
+            'och': { swedish: 'och', bondska: 'å', english: 'and', ipa: '[ɔ]', category: 'conjunction', phase: 3 },
+            'nog': { swedish: 'nog', bondska: 'nôg', english: 'enough/probably', ipa: '[noːg]', category: 'adverb', phase: 3 },
+            'ska': { swedish: 'ska', bondska: 'ʂa', english: 'shall/will', ipa: '[ʂa]', category: 'auxiliary', phase: 3 },
+            'är': { swedish: 'är', bondska: 'är', english: 'is/are', ipa: '[ær]', category: 'verb', phase: 2 },
+            'här': { swedish: 'här', bondska: 'här', english: 'here', ipa: '[hær]', category: 'adverb', phase: 2 }
+        };
+
+        // ============= EXAMPLES =============
+        const examples = [
+            { phase: 1, swedish: 'Jag', bondska: 'Jå', english: 'I', category: 'pronoun' },
+            { phase: 1, swedish: 'Du', bondska: 'Dö', english: 'You', category: 'pronoun' },
+            { phase: 1, swedish: 'Vi', bondska: 'Vó', english: 'We', category: 'pronoun' },
+            { phase: 2, swedish: 'Hej', bondska: 'Häj', english: 'Hello', category: 'greeting' },
+            { phase: 2, swedish: 'Hej jag heter Alex', bondska: 'Häj jå hätär Alex', english: 'Hello my name is Alex', category: 'greeting' },
+            { phase: 2, swedish: 'Du är här', bondska: 'Dö är här', english: 'You are here', category: 'statement' },
+            { phase: 2, swedish: 'Jag heter Anna', bondska: 'Jå hätär Anna', english: 'I am called Anna', category: 'introduction' },
+            { phase: 3, swedish: 'Vi ska gå', bondska: 'Vó ʂa gâ', english: 'We shall go', category: 'future' },
+            { phase: 3, swedish: 'Nog är det så', bondska: 'Nôg är dä så', english: 'It probably is so', category: 'statement' },
+            { phase: 1, swedish: 'Jag inte', bondska: 'Jå ikk', english: 'I not', category: 'negation' },
+            { phase: 2, swedish: 'Min heter', bondska: 'Mîn hätär', english: 'My is called', category: 'possession' },
+            { phase: 4, swedish: 'Jag ska gå', bondska: 'Jå ʂa gâ', english: 'I shall go', category: 'future' }
+        ];
 
         // ============= TAB SWITCHING =============
         function showTab(e, tabName) {
             e.preventDefault();
             
-            // Hide all tabs
             const tabs = document.querySelectorAll('.tab-content');
             tabs.forEach(tab => tab.classList.remove('active'));
             
-            // Remove active from all buttons
             const buttons = document.querySelectorAll('.tab-button');
             buttons.forEach(btn => btn.classList.remove('active'));
             
-            // Show selected tab
             document.getElementById(tabName).classList.add('active');
             e.target.classList.add('active');
             
-            // Initialize tab content
             if (tabName === 'alphabet') initAlphabet();
             if (tabName === 'vocabulary') initVocabulary();
             if (tabName === 'rules') initRules();
@@ -621,9 +631,8 @@
             const container = document.getElementById('vocabulary-container');
             container.innerHTML = words.map(word => `
                 <div class="card">
-                    <h3>${word.swedish}</h3>
+                    <h3>${word.swedish} → ${word.bondska}</h3>
                     <div class="card-content">
-                        <div><strong>Bondska:</strong> ${word.bondska}</div>
                         <div><strong>English:</strong> ${word.english}</div>
                         <div><strong>IPA:</strong> ${word.ipa}</div>
                         <div><strong>Category:</strong> ${word.category}</div>
@@ -654,14 +663,14 @@
             });
             
             let html = '';
-            Object.keys(grouped).forEach(phase => {
-                html += `<h3 style="color: var(--primary); margin-top: 20px;">Phase ${phase} Rules</h3>`;
+            Object.keys(grouped).sort().forEach(phase => {
+                html += `<h3 style="color: var(--primary); margin-top: 20px; margin-bottom: 15px;">Phase ${phase} Rules</h3>`;
                 grouped[phase].forEach(rule => {
                     html += `
                         <div class="card" style="margin-bottom: 15px;">
                             <h4>${rule.name}</h4>
-                            <p><strong>Pattern:</strong> ${rule.pattern.source.replace(/\\/g, '')} → ${rule.replacement}</p>
                             <p><strong>Explanation:</strong> ${rule.explanation}</p>
+                            <p style="color: #666; font-size: 0.9em;">Pattern: ${rule.pattern.source.replace(/\\/g, '')} → ${rule.replacement}</p>
                         </div>
                     `;
                 });
@@ -686,8 +695,8 @@
             container.innerHTML = items.map(ex => `
                 <div class="example-item">
                     <div class="example-swedish">🇸🇪 <strong>${ex.swedish}</strong></div>
-                    <div class="example-bondska">킻 <strong>${ex.bondska}</strong></div>
-                    <div class="example-english🇚en <em>${ex.english}</em></div>
+                    <div class="example-bondska">→ <strong>${ex.bondska}</strong></div>
+                    <div class="example-english">🇬🇧 <em>${ex.english}</em></div>
                     <div>
                         <span class="phase-badge" style="margin-right: 10px;">Phase ${ex.phase}</span>
                         <span style="color: #666; font-size: 0.9em;">Category: ${ex.category}</span>
@@ -698,7 +707,8 @@
 
         // Initialize on page load
         window.addEventListener('DOMContentLoaded', function() {
-            console.log('🇸🇪 Bondska Translator v1.0 loaded successfully!');
+            console.log('🇸🇪 Bondska Translator v1.1 loaded successfully!');
+            console.log('Alphabet: A, Â, B, D, E, F, G, H, I, J, K, L, M, N, O, Ô, P, R, S, T, U, V, Y, Å, Ä, Ö');
             initAlphabet();
             initVocabulary();
             initRules();
