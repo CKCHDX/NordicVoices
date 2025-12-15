@@ -5,162 +5,104 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Swedish ↔ Bondska Translator</title>
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 20px auto; padding: 0 15px; background-color: #f9f9f9; }
-        h1, h2, h3 { color: #2c3e50; }
-        textarea { width: 100%; box-sizing: border-box; padding: 10px; border-radius: 5px; border: 1px solid #ccc; font-size: 16px; margin-bottom: 10px; }
-        button { background-color: #3498db; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; font-size: 16px; }
-        button:hover { background-color: #2980b9; }
-        #result { background-color: #ecf0f1; padding: 15px; border-radius: 5px; min-height: 50px; white-space: pre-wrap; word-wrap: break-word; }
-        .container { background-color: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-        .section { margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; color: #E0E0E0; max-width: 800px; margin: 20px auto; padding: 0 15px; background-color: #121212; }
+        h1, h2, h3 { color: #5DADE2; }
+        textarea { width: 100%; box-sizing: border-box; padding: 10px; border-radius: 5px; border: 1px solid #444; font-size: 16px; margin-bottom: 10px; background-color: #1E1E1E; color: #E0E0E0; }
+        button { background-color: #3498DB; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; font-size: 16px; }
+        button:hover { background-color: #2980B9; }
+        #result { background-color: #1E1E1E; padding: 15px; border-radius: 5px; border: 1px solid #333; min-height: 50px; white-space: pre-wrap; word-wrap: break-word; font-family: monospace; }
+        .container { background-color: #282828; padding: 25px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+        .section { margin-top: 30px; border-top: 1px solid #444; padding-top: 20px; }
         table { width: 100%; border-collapse: collapse; }
-        th, td { text-align: left; padding: 8px; border-bottom: 1px solid #ddd; }
-        th { background-color: #f2f2f2; }
-        .note { font-size: 0.9em; color: #666; background: #fff3cd; padding: 5px 10px; border-radius: 4px; display: inline-block; margin-top: 5px; }
+        th, td { text-align: left; padding: 8px; border-bottom: 1px solid #444; }
+        th { background-color: #333; }
+        fieldset { border: 1px solid #444; border-radius: 5px; margin-bottom: 15px; }
+        legend { color: #5DADE2; padding: 0 10px; }
+        label { margin-right: 15px; }
     </style>
 </head>
 <body>
 
 <div class="container">
     <h1>🗹️ Swedish ↔ Bondska Translator</h1>
-    <p>Enter Swedish text to translate it into Bondska. The translation uses a dictionary for common words and applies basic phonetic rules for others.</p>
     
-    <textarea id="swedish-text" rows="6" placeholder="Enter Swedish text here (e.g., 'Hej vad heter du')..."></textarea>
-    <button onclick="convertText()">🔄 Translate</button>
+    <fieldset>
+        <legend>Learning Phase</legend>
+        <label><input type="radio" name="phase" value="1" checked> Phase 1: Pronouns</label>
+        <label><input type="radio" name="phase" value="2"> Phase 2: Vowel Shifts</label>
+        <label><input type="radio" name="phase" value="3"> Phase 3: Full Dictionary</label>
+        <label><input type="radio" name="phase" value="4"> Phase 4: Full + Rules</label>
+    </fieldset>
+
+    <textarea id="swedish-text" rows="6" placeholder="Enter Swedish text here..."></textarea>
+    <button onclick="runTranslation()">🔄 Translate</button>
     
     <h3>📖 Bondska Translation:</h3>
     <div id="result">Translation will appear here.</div>
-
-    <div class="section">
-        <h2>🗣️ Bondska Alphabet & Pronunciation</h2>
-        <p>The Bondska alphabet extends the standard Swedish alphabet to represent its unique vowel sounds.</p>
-        
-        <h3>Special Characters</h3>
-        <ul>
-            <li><b>Â / â</b>: Represents a very fronted "a" sound (like in English "cat"). Common in Ume and Burträsk dialects.</li>
-            <li><b>Ô / ô</b>: A sound between "ö" and "o" (often a schwa-like central vowel).</li>
-            <li><b>Å / å</b>: Pronounced more open than in Swedish, often replacing standard "a".</li>
-        </ul>
-        
-        <p><b>Key Phonetic Features:</b></p>
-        <ul>
-            <li><b>Vowel Shifts:</b> Standard Swedish /o/ often becomes /u/ (<i>bok</i> → <i>buk</i>).</li>
-            <li><b>W Sound:</b> The English /w/ sound is preserved in many words (<i>var</i> → <i>wå</i> or <i>wars</i>).</li>
-            <li><b>Retroflex Consonants:</b> "Thick L" and retroflex "sh" (<i>sj</i>, <i>skj</i>) are prominent.</li>
-        </ul>
-    </div>
-
-    <div class="section">
-        <h2>📚 Translation Logic</h2>
-        <p>The translation process follows these steps:</p>
-        <ol>
-            <li><b>Normalization:</b> The input text is converted to lowercase.</li>
-            <li><b>Dictionary Lookup:</b> Checks against a database of common Bondska words (from Kalix, Ume, and Skellefteå varieties).</li>
-            <li><b>Phonetic Rules:</b> Applies vowel shifts and consonant changes for unknown words.</li>
-        </ol>
-        
-        <h3>Dictionary Sample:</h3>
-        <table>
-            <thead>
-                <tr><th>Swedish</th><th>Bondska (Variant)</th></tr>
-            </thead>
-            <tbody>
-                <tr><td>jag</td><td>i / je</td></tr>
-                <tr><td>är</td><td>jer / jär</td></tr>
-                <tr><td>inte</td><td>int / äint</td></tr>
-                <tr><td>vad</td><td>wå</td></tr>
-                <tr><td>huset</td><td>häuse / börninga</td></tr>
-            </tbody>
-        </table>
-    </div>
-
 </div>
 
 <script>
-    // Dictionary combining multiple Westrobothnian variants (Kalix, Ume, Skellefteå)
-    const dictionary = {
-        // Pronouns
-        "jag": "i",
-        "du": "do", // or 'dö'
-        "han": "han", // often 'hån'
-        "hon": "ho",  // or 'hö'
-        "vi": "ve",
-        "ni": "je",
-        "de": "döm",
-        
-        // Common Verbs
-        "är": "jer",
-        "var": "wår",
-        "heter": "hät",
-        "kan": "kån",
-        "vill": "will",
-        "ska": "sku",
-        "gå": "gå", // or 'ga'
-        
-        // Common Words
-        "inte": "int",
-        "det": "he",
-        "vad": "wå",
-        "var": "wars", // where
-        "här": "hänn",
-        "där": "dänn",
-        "nu": "nö",
-        "hus": "häus",
-        "bok": "buk",
-        "katt": "kått",
-        "hund": "hunn",
-        "skola": "skul",
-        
-        // Phrases
-        "hej": "heddu",
-        "tack": "takk",
-        "ja": "joh",
-        "nej": "nä", // or 'ae'
-        "mycket": "myttje"
+    const dictionaries = {
+        pronouns: { "jag": "i", "du": "do", "han": "hån", "hon": "ho", "vi": "ve", "ni": "je", "de": "döm" },
+        common: { "är": "jer", "var": "wår", "heter": "hät", "inte": "int", "det": "he", "vad": "wå", "hus": "häus", "bok": "buk", "hej": "heddu", "tack": "takk" }
     };
 
-    const phoneticRules = [
-        // Vowel Shifts
-        { from: /a/g, to: "å" },  // Mat -> Måt
-        { from: /e/g, to: "ä" },  // Se -> Sä
-        { from: /o/g, to: "u" },  // Bok -> Buk
-        { from: /ö/g, to: "ô" },  // Död -> Dôd (approx)
-        
-        // Consonant Shifts
-        { from: /^v/g, to: "w" }, // Var -> War (if not in dict)
-        { from: /ng$/g, to: "nk" } // Lång -> Lånk/La:k (simplified)
-    ];
+    const fullDictionary = { ...dictionaries.pronouns, ...dictionaries.common };
 
-    function applyPhoneticRules(word) {
+    const phoneticRules = {
+        vowels: [
+            { from: /a/g, to: "å" },
+            { from: /e/g, to: "ä" },
+            { from: /o/g, to: "u" }
+        ],
+        all: [
+            { from: /a/g, to: "å" },
+            { from: /e/g, to: "ä" },
+            { from: /o/g, to: "u" },
+            { from: /ö/g, to: "ô" },
+            { from: /^v/g, to: "w" }
+        ]
+    };
+
+    function applyRules(word, rulesToApply) {
         let transformedWord = word;
-        for (const rule of phoneticRules) {
+        for (const rule of rulesToApply) {
             transformedWord = transformedWord.replace(rule.from, rule.to);
         }
         return transformedWord;
     }
 
-    function convertText() {
-        // Use a simple regex to split but keep delimiters (spaces, punctuation)
-        const input = document.getElementById("swedish-text").value;
-        // Split by non-word characters but keep them
-        const tokens = input.toLowerCase().split(/([^\wåäöÅÄÖ]+)/);
-        
-        const translatedTokens = tokens.map(token => {
-            // If it's just whitespace or punctuation, return as is
-            if (!token.match(/[\wåäöÅÄÖ]/)) {
-                return token;
-            }
+    function translateToken(token, phase) {
+        if (!token.match(/[\wåäöÅÄÖ]/)) return token; // Skip punctuation/whitespace
+
+        switch(phase) {
+            case '1': // Pronouns only
+                return dictionaries.pronouns[token] || token;
+            case '2': // Pronouns + Vowel shifts
+                if (dictionaries.pronouns[token]) return dictionaries.pronouns[token];
+                return applyRules(token, phoneticRules.vowels);
+            case '3': // Full dictionary
+                return fullDictionary[token] || token;
+            case '4': // Full dictionary + all rules as fallback
+            default:
+                if (fullDictionary[token]) return fullDictionary[token];
+                return applyRules(token, phoneticRules.all);
+        }
+    }
+
+    function runTranslation() {
+        try {
+            const input = document.getElementById("swedish-text").value;
+            const phase = document.querySelector('input[name="phase"]:checked').value;
             
-            // Dictionary lookup
-            if (dictionary[token]) {
-                return dictionary[token];
-            }
+            const tokens = input.toLowerCase().split(/([^\wåäöÅÄÖ]+)/);
+            const translatedTokens = tokens.map(token => translateToken(token, phase));
             
-            // Fallback to rules
-            return applyPhoneticRules(token);
-        });
-        
-        document.getElementById("result").textContent = translatedTokens.join("");
+            document.getElementById("result").textContent = translatedTokens.join("");
+        } catch (error) {
+            document.getElementById("result").textContent = "An error occurred during translation. Please check the console for details.";
+            console.error("Translation Error:", error);
+        }
     }
 </script>
 
