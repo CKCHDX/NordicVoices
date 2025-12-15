@@ -3,108 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Swedish ↔ Bondska Translator</title>
+    <title>Bondska Dialect Translator</title>
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; color: #E0E0E0; max-width: 800px; margin: 20px auto; padding: 0 15px; background-color: #121212; }
-        h1, h2, h3 { color: #5DADE2; }
-        textarea { width: 100%; box-sizing: border-box; padding: 10px; border-radius: 5px; border: 1px solid #444; font-size: 16px; margin-bottom: 10px; background-color: #1E1E1E; color: #E0E0E0; }
-        button { background-color: #3498DB; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; font-size: 16px; }
-        button:hover { background-color: #2980B9; }
-        #result { background-color: #1E1E1E; padding: 15px; border-radius: 5px; border: 1px solid #333; min-height: 50px; white-space: pre-wrap; word-wrap: break-word; font-family: monospace; }
-        .container { background-color: #282828; padding: 25px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
-        .section { margin-top: 30px; border-top: 1px solid #444; padding-top: 20px; }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { text-align: left; padding: 8px; border-bottom: 1px solid #444; }
-        th { background-color: #333; }
-        fieldset { border: 1px solid #444; border-radius: 5px; margin-bottom: 15px; }
-        legend { color: #5DADE2; padding: 0 10px; }
-        label { margin-right: 15px; }
+        :root {
+            --bg-color: #1a1a1a;
+            --primary-color: #2a2a2a;
+            --secondary-color: #3a3a3a;
+            --text-color: #e0e0e0;
+            --accent-color: #00aaff;
+            --border-color: #4a4a4a;
+        }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background-color: var(--bg-color); color: var(--text-color); margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .translator-container { width: 90%; max-width: 900px; background: var(--primary-color); border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); overflow: hidden; }
+        header { background: var(--secondary-color); padding: 20px; text-align: center; border-bottom: 1px solid var(--border-color); }
+        header h1 { margin: 0; font-size: 24px; color: var(--accent-color); }
+        header p { margin: 5px 0 0; color: #aaa; }
+        main { padding: 25px; }
+        .io-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .io-box textarea { width: 100%; height: 200px; background: var(--bg-color); color: var(--text-color); border: 1px solid var(--border-color); border-radius: 8px; padding: 15px; font-size: 16px; resize: none; }
+        .io-box h2 { margin-top: 0; font-size: 18px; color: #ccc; }
+        #output-box { background: var(--bg-color); border-radius: 8px; padding: 15px; min-height: 200px; font-size: 16px; border: 1px solid var(--border-color); white-space: pre-wrap; }
+        .controls { padding: 20px; background: var(--secondary-color); border-top: 1px solid var(--border-color); text-align: center; }
+        fieldset { border: 1px solid var(--border-color); border-radius: 8px; padding: 10px 15px; margin: 0; }
+        legend { color: var(--accent-color); font-weight: bold; }
     </style>
 </head>
 <body>
+    <div class="translator-container">
+        <header>
+            <h1>Swedish ↔ Bondska Translator</h1>
+            <p>An authentic Westrobothnian (Pitemål) dialect engine</p>
+        </header>
+        <main>
+            <div class="io-grid">
+                <div class="io-box">
+                    <h2>Standard Swedish</h2>
+                    <textarea id="swedish-input" placeholder="Skriv svenska här..." oninput="runTranslation()"></textarea>
+                </div>
+                <div class="io-box">
+                    <h2>Bondska (Pitemål)</h2>
+                    <div id="output-box"></div>
+                </div>
+            </div>
+        </main>
+        <div class="controls">
+            <fieldset>
+                <legend>Dialect Strictness</legend>
+                <label><input type="radio" name="strictness" value="1"> Swedified (Simple)</label>
+                <label><input type="radio" name="strictness" value="2" checked> Full Bondska (Authentic)</label>
+            </fieldset>
+        </div>
+    </div>
 
-<div class="container">
-    <h1>🗹️ Swedish ↔ Bondska Translator</h1>
-    
-    <fieldset>
-        <legend>Learning Phase</legend>
-        <label><input type="radio" name="phase" value="1" checked> Phase 1: Pronouns</label>
-        <label><input type="radio" name="phase" value="2"> Phase 2: Vowel Shifts</label>
-        <label><input type="radio" name="phase" value="3"> Phase 3: Full Dictionary</label>
-        <label><input type="radio" name="phase" value="4"> Phase 4: Full + Rules</label>
-    </fieldset>
+    <script>
+        const dictionary = {
+            "jag": "i", "är": "jär", "ha": "ha", "har": "ha",
+            "vi": "vä", "är": "våra", "ha": "håva", // Plural forms
+            "du": "dö", "han": "han", "hon": "ho", "den": "he", "det": "he",
+            "de": "döm",
+            "inte": "et", "vad": "vo", "var": "vors", "hur": "vöre",
+            "kasta": "kaast", "bakar": "båka", "pratar": "pråta",
+            "bok": "båok", "hus": "heus", "hand": "hann", "man": "kar",
+            "skogen": "skåogen", "bordet": "båoLe"
+        };
 
-    <textarea id="swedish-text" rows="6" placeholder="Enter Swedish text here..."></textarea>
-    <button onclick="runTranslation()">🔄 Translate</button>
-    
-    <h3>📖 Bondska Translation:</h3>
-    <div id="result">Translation will appear here.</div>
-</div>
+        const verbPluralEndings = { "ar": "a", "er": "a" };
 
-<script>
-    const dictionaries = {
-        pronouns: { "jag": "i", "du": "do", "han": "hån", "hon": "ho", "vi": "ve", "ni": "je", "de": "döm" },
-        common: { "är": "jer", "var": "wår", "heter": "hät", "inte": "int", "det": "he", "vad": "wå", "hus": "häus", "bok": "buk", "hej": "heddu", "tack": "takk" }
-    };
-
-    const fullDictionary = { ...dictionaries.pronouns, ...dictionaries.common };
-
-    const phoneticRules = {
-        vowels: [
-            { from: /a/g, to: "å" },
-            { from: /e/g, to: "ä" },
-            { from: /o/g, to: "u" }
-        ],
-        all: [
-            { from: /a/g, to: "å" },
-            { from: /e/g, to: "ä" },
-            { from: /o/g, to: "u" },
-            { from: /ö/g, to: "ô" },
-            { from: /^v/g, to: "w" }
-        ]
-    };
-
-    function applyRules(word, rulesToApply) {
-        let transformedWord = word;
-        for (const rule of rulesToApply) {
-            transformedWord = transformedWord.replace(rule.from, rule.to);
+        function isPlural(subject) {
+            return ["vä", "ni", "döm"].includes(subject.toLowerCase());
         }
-        return transformedWord;
-    }
 
-    function translateToken(token, phase) {
-        if (!token.match(/[\wåäöÅÄÖ]/)) return token; // Skip punctuation/whitespace
+        function translateFullBondska(tokens) {
+            let translated = [];
+            for (let i = 0; i < tokens.length; i++) {
+                let token = tokens[i];
+                if (dictionary[token]) {
+                    translated.push(dictionary[token]);
+                    continue;
+                }
 
-        switch(phase) {
-            case '1': // Pronouns only
-                return dictionaries.pronouns[token] || token;
-            case '2': // Pronouns + Vowel shifts
-                if (dictionaries.pronouns[token]) return dictionaries.pronouns[token];
-                return applyRules(token, phoneticRules.vowels);
-            case '3': // Full dictionary
-                return fullDictionary[token] || token;
-            case '4': // Full dictionary + all rules as fallback
-            default:
-                if (fullDictionary[token]) return fullDictionary[token];
-                return applyRules(token, phoneticRules.all);
+                // Grammatical rule: Plural verb forms
+                if (i > 0 && isPlural(translated[i-1])) {
+                    for (const [sv, bo] of Object.entries(verbPluralEndings)) {
+                        if (token.endsWith(sv)) {
+                            token = token.slice(0, -sv.length) + bo;
+                            break;
+                        }
+                    }
+                }
+                
+                // Phonetic rule: Apocope (simplified)
+                if (token.endsWith('a')) {
+                    token = token.slice(0, -1);
+                }
+
+                translated.push(token);
+            }
+            return translated;
         }
-    }
 
-    function runTranslation() {
-        try {
-            const input = document.getElementById("swedish-text").value;
-            const phase = document.querySelector('input[name="phase"]:checked').value;
-            
-            const tokens = input.toLowerCase().split(/([^\wåäöÅÄÖ]+)/);
-            const translatedTokens = tokens.map(token => translateToken(token, phase));
-            
-            document.getElementById("result").textContent = translatedTokens.join("");
-        } catch (error) {
-            document.getElementById("result").textContent = "An error occurred during translation. Please check the console for details.";
-            console.error("Translation Error:", error);
+        function translateSwedified(tokens) {
+            return tokens.map(token => dictionary[token] || token.replace(/a/g, 'å').replace(/e/g, 'ä'));
         }
-    }
-</script>
 
+        function runTranslation() {
+            const input = document.getElementById("swedish-input").value.toLowerCase();
+            const strictness = document.querySelector('input[name="strictness"]:checked').value;
+            const tokens = input.split(/(\s+|[.,!?-])/).filter(Boolean);
+
+            let outputTokens;
+            if (strictness === '2') {
+                outputTokens = translateFullBondska(tokens);
+            } else {
+                outputTokens = translateSwedified(tokens);
+            }
+
+            document.getElementById('output-box').textContent = outputTokens.join('');
+        }
+    </script>
 </body>
 </html>
