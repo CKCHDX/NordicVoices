@@ -3,41 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NordicVoices | Rule-Based Engine</title>
+    <title>NordicVoices | Pitemål Engine v2.0</title>
     <style>
         :root {
             --bg-color: #050505;
             --panel-bg: #111;
             --border: #333;
-            --accent: #00ff9d; /* Cyberpunk Green */
+            --accent: #00ff9d;
             --text-main: #eee;
             --text-dim: #777;
         }
         body { margin: 0; font-family: 'Courier New', monospace; background: var(--bg-color); color: var(--text-main); display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
         
-        /* Terminal / Cyberpunk Aesthetic */
-        .interface { width: 95%; max-width: 1000px; margin-top: 50px; border: 1px solid var(--border); box-shadow: 0 0 20px rgba(0, 255, 157, 0.1); background: var(--panel-bg); padding: 2px; }
+        .interface { width: 95%; max-width: 1200px; margin-top: 50px; border: 1px solid var(--border); box-shadow: 0 0 20px rgba(0, 255, 157, 0.1); background: var(--panel-bg); display: flex; flex-direction: column; }
         
         header { background: #000; padding: 15px 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
         h1 { margin: 0; font-size: 1.2rem; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); }
         .status { font-size: 0.8rem; color: var(--text-dim); }
         
-        .grid { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--border); }
-        .panel { padding: 0; position: relative; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--border); flex-grow: 1; }
+        .panel { padding: 0; position: relative; display: flex; flex-direction: column; }
         .panel:first-child { border-right: 1px solid var(--border); }
         
-        .label { position: absolute; top: 10px; left: 15px; font-size: 0.7rem; color: var(--text-dim); text-transform: uppercase; pointer-events: none; }
+        .label { padding: 10px 15px; font-size: 0.7rem; color: var(--text-dim); text-transform: uppercase; background: #080808; border-bottom: 1px solid var(--border); }
         
-        textarea { width: 100%; height: 300px; background: transparent; border: none; color: var(--text-main); font-family: inherit; font-size: 1rem; padding: 40px 20px 20px 20px; resize: none; box-sizing: border-box; line-height: 1.6; }
+        textarea { width: 100%; height: 400px; background: transparent; border: none; color: var(--text-main); font-family: inherit; font-size: 1rem; padding: 20px; resize: none; box-sizing: border-box; line-height: 1.6; flex-grow: 1; }
         textarea:focus { outline: none; background: rgba(0, 255, 157, 0.02); }
         
         #output { color: var(--accent); }
         
-        .debug-panel { background: #000; padding: 15px; font-size: 0.8rem; color: var(--text-dim); border-top: 1px solid var(--border); min-height: 100px; max-height: 200px; overflow-y: auto; }
-        .log-entry { margin-bottom: 5px; border-bottom: 1px solid #222; padding-bottom: 2px; }
-        .log-entry span { color: #fff; }
+        .debug-panel { background: #000; padding: 15px; font-size: 0.8rem; color: var(--text-dim); border-top: 1px solid var(--border); height: 150px; overflow-y: auto; font-family: 'Consolas', monospace; }
+        .log-entry { margin-bottom: 4px; border-bottom: 1px solid #1a1a1a; padding-bottom: 2px; display: flex; gap: 10px; }
+        .log-orig { color: #888; width: 100px; }
+        .log-trans { color: var(--accent); width: 100px; }
+        .log-rule { color: #555; font-style: italic; }
         
-        .controls { padding: 10px 20px; display: flex; gap: 20px; background: #080808; align-items: center; }
+        .controls { padding: 15px 20px; display: flex; gap: 20px; background: #080808; align-items: center; flex-wrap: wrap; }
         label { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; cursor: pointer; color: var(--text-dim); }
         input[type="checkbox"] { accent-color: var(--accent); }
     </style>
@@ -46,14 +47,14 @@
 
 <div class="interface">
     <header>
-        <h1>NordicVoices // Pitemål Engine</h1>
-        <div class="status">System: ONLINE</div>
+        <h1>NordicVoices // Pitemål Engine v2.0</h1>
+        <div class="status">Ruleset: AUTHENTIC</div>
     </header>
     
     <div class="grid">
         <div class="panel">
             <div class="label">Input Stream [Swedish]</div>
-            <textarea id="input" placeholder="Initiate text sequence..." oninput="processText()"></textarea>
+            <textarea id="input" placeholder="Enter text to process..." oninput="processText()"></textarea>
         </div>
         <div class="panel">
             <div class="label">Processed Output [Pitemål]</div>
@@ -62,184 +63,166 @@
     </div>
     
     <div class="controls">
-        <label><input type="checkbox" id="rule-apocope" checked onchange="processText()"> Apocope (Vowel Drop)</label>
-        <label><input type="checkbox" id="rule-vowels" checked onchange="processText()"> Vowel Shift Matrix</label>
-        <label><input type="checkbox" id="rule-consonants" checked onchange="processText()"> Consonant Transformations</label>
-        <label><input type="checkbox" id="rule-morphology" checked onchange="processText()"> Morphological Patterns</label>
+        <label><input type="checkbox" id="rule-particles" checked onchange="processText()"> Grammar Particles (men->män)</label>
+        <label><input type="checkbox" id="rule-suffixes" checked onchange="processText()"> Smart Suffixes (-het->he)</label>
+        <label><input type="checkbox" id="rule-verbs" checked onchange="processText()"> Verb Apocope (-ar->ø)</label>
+        <label><input type="checkbox" id="rule-phonology" checked onchange="processText()"> Phonetic Shifts (v->w)</label>
     </div>
 
     <div class="debug-panel" id="debug-log">
-        <!-- Live transformation logs will appear here -->
-        <div class="log-entry">Waiting for input stream...</div>
+        <div class="log-entry">System ready. Awaiting input...</div>
     </div>
 </div>
 
 <script>
-    // --- Rule-Based Transformation Engine ---
-    
-    // 1. Character/Substring Replacement Rules (Ordered by priority)
+    // --- Advanced Rule Engine v2.0 ---
+
+    // 1. Grammatical Particles (Function Words)
+    // High priority structural changes
+    const particleRules = {
+        "men": "män",
+        "och": "å",
+        "att": "at",
+        "som": "som", // Unchanged usually
+        "det": "hä", // Specific object reference
+        "den": "hä",
+        "de": "döm", // Subject "they" (careful with "the")
+        "vi": "ve",
+        "ni": "je",
+        "du": "dö",
+        "dig": "dä",
+        "mig": "mä",
+        "sig": "sä",
+        "från": "frå",
+        "med": "wä",
+        "till": "täll",
+        "utan": "utan",
+        "vid": "ve",
+        "vem": "väm",
+        "vad": "vo",
+        "hur": "vöre",
+        "sverige": "Schwerje",
+        "teknologin": "teknologin", // Keep technical terms often
+        "liv": "liv",
+        "mycket": "myttje"
+    };
+
+    // 2. Suffix Transformations (Morphology)
+    const suffixRules = [
+        { suffix: "het", replace: "he", name: "-het -> -he" }, // osäkerhet -> osäkerhe
+        { suffix: "heten", replace: "he", name: "-heten -> -he" },
+        { suffix: "nad", replace: "na", name: "-nad -> -na" }, // marknad -> markna
+        { suffix: "ande", replace: "an", name: "-ande -> -an" },
+        { suffix: "ning", replace: "ning", name: "-ning (keep)" },
+        { suffix: "tion", replace: "tion", name: "-tion (keep)" },
+        { suffix: "en", replace: "n", name: "-en -> -n (Definite)" }, // bilen -> biln (simplified)
+        { suffix: "et", replace: "e", name: "-et -> -e (Definite)" }  // huset -> huse
+    ];
+
+    // 3. Phonological patterns (Regex)
     const phonologyRules = [
-        // Consonant Clusters
-        { regex: /sk\b/g, replace: "sch", name: "Soft SK end" }, // fisk -> fisch
-        { regex: /^hv/g, replace: "v", name: "Silent H" },      // hvad -> va
-        { regex: /^v/g, replace: "w", name: "Initial V -> W" }, // var -> war
-        { regex: /rs\b/g, replace: "sch", name: "Retroflex RS" },
-        { regex: /rd\b/g, replace: "L", name: "Thick L (rd)" }, // bord -> boL
-        { regex: /rn\b/g, replace: "n", name: "Retroflex RN" }, 
-        
-        // Vowel Shifts
-        { regex: /o/g, replace: "u", name: "O -> U shift" },    // bok -> buk (base rule)
-        { regex: /a\b/g, replace: "", name: "Apocope (End A)" }, // prata -> prat
-        { regex: /er\b/g, replace: "ä", name: "Ending ER -> Ä" }, // heter -> hetä -> hät? (Contextual)
-        { regex: /ande\b/g, replace: "an", name: "Participle -ande -> -an" },
-        
-        // Specific Patterns
-        { regex: /eig\b/g, replace: "ej", name: "Eig -> Ej" },
-        { regex: /yg\b/g, replace: "ög", name: "Yg -> Ög" },
+        { regex: /^v/, replace: "w", name: "Initial V->W" }, // var -> war
+        { regex: /sk\b/, replace: "sch", name: "Soft SK end" },
+        { regex: /rd\b/, replace: "L", name: "Thick L (rd)" },
+        { regex: /rt\b/, replace: "Lt", name: "Thick L (rt)" },
+        { regex: /rn\b/, replace: "Rn", name: "Thick N (rn)" },
+        { regex: /o(?=[bdfgklmnpstv])/, replace: "u", name: "O->U (mid-word)" }, // General rule
+        { regex: /a(?=ng|nk)/, replace: "å", name: "A->Å (before nk/ng)" }
     ];
 
-    // 2. Morphological Rules (Word Structure)
-    const morphRules = [
-        // Definite Articles (Suffixes)
-        // boken -> båoka (en -> a)
-        { regex: /en\b/g, replace: "a", context: "definite_noun_en" }, 
-        { regex: /et\b/g, replace: "e", context: "definite_noun_et" },
-        
-        // Plural Verb Endings
-        // (This usually requires knowing the subject, but we can do simple pattern matching)
-        // We handle this via the 'Process' function logic
-    ];
-    
-    // 3. High-Frequency "Exceptions" as Rules (Not dictionary, but Pattern Overrides)
-    // We treat these as "Root Transformations"
-    const rootTransforms = [
-        { match: "jag", replace: "I" },
-        { match: "och", replace: "å" },
-        { match: "är", replace: "jär" },
-        { match: "inte", replace: "int" },
-        { match: "sverige", replace: "Schwerje" },
-        { match: "från", replace: "frå" },
-        { match: "vi", replace: "ve" },
-        { match: "ni", replace: "je" },
-        { match: "de", replace: "döm" }
-    ];
-
-    function log(msg) {
+    function log(original, translated, rule) {
         const logPanel = document.getElementById('debug-log');
         const entry = document.createElement('div');
         entry.className = 'log-entry';
-        entry.innerHTML = `> ${msg}`;
+        entry.innerHTML = `<div class="log-orig">${original}</div><div class="log-trans">${translated}</div><div class="log-rule">${rule}</div>`;
         logPanel.prepend(entry);
-        // Keep log clean
-        if (logPanel.children.length > 20) logPanel.lastChild.remove();
+        if (logPanel.children.length > 50) logPanel.lastChild.remove();
     }
 
     function processText() {
         const input = document.getElementById('input').value;
-        const tokens = input.split(/(\s+|[.,!?-])/); 
+        const tokens = input.split(/(\s+|[.,!?:;-])/); // Preserve all delimiters
         const outputField = document.getElementById('output');
-        const debugPanel = document.getElementById('debug-log');
-        debugPanel.innerHTML = ''; // Clear log on new type
+        document.getElementById('debug-log').innerHTML = ''; // Clear log
         
-        let translatedTokens = [];
-        
-        // Flags
-        const useApocope = document.getElementById('rule-apocope').checked;
-        const useVowels = document.getElementById('rule-vowels').checked;
-        const useConsonants = document.getElementById('rule-consonants').checked;
-        const useMorph = document.getElementById('rule-morphology').checked;
+        // Settings
+        const useParticles = document.getElementById('rule-particles').checked;
+        const useSuffixes = document.getElementById('rule-suffixes').checked;
+        const useVerbs = document.getElementById('rule-verbs').checked;
+        const usePhono = document.getElementById('rule-phonology').checked;
 
-        for (let i = 0; i < tokens.length; i++) {
-            let token = tokens[i];
+        let processedTokens = tokens.map(token => {
+            if (!token.match(/[a-zA-ZåäöÅÄÖ]/)) return token; // Skip non-words
+
             let original = token;
-            
-            // Skip non-words
-            if (!token.match(/[a-zA-ZåäöÅÄÖ]/)) {
-                translatedTokens.push(token);
-                continue;
-            }
-            
-            let processed = token.toLowerCase();
-            let stepLog = [];
+            let word = token.toLowerCase();
+            let appliedRule = "Raw";
 
-            // A. Root Override (The "Anti-Dictionary")
-            // Instead of a full dict, we check for core structural roots first
-            let rootFound = false;
-            for (let rt of rootTransforms) {
-                if (processed === rt.match) {
-                    processed = rt.replace;
-                    rootFound = true;
-                    stepLog.push(`Root: ${rt.match}->${rt.replace}`);
-                    break;
-                }
-            }
-
-            if (!rootFound) {
-                // B. Procedural Generation
-                
-                // 1. Vowel Shift (O -> U, etc)
-                if (useVowels) {
-                    // Logic: 'o' becomes 'u' often, but 'a' -> 'å' is complex.
-                    // Let's implement the specific Westrobothnian 'a' -> 'å' before 'ng' or 'ld'
-                    if (processed.match(/a(ng|ld|nd)/)) {
-                        processed = processed.replace(/a(?=ng|ld|nd)/g, "å");
-                        stepLog.push("Vowel: a->å (before cluster)");
-                    }
-                    // General O->U (simple approximation for engine)
-                    // processed = processed.replace(/o/g, "u"); 
+            // A. Particle Check (Exact match)
+            if (useParticles && particleRules[word]) {
+                word = particleRules[word];
+                appliedRule = "Particle";
+            } else {
+                // B. Verb Apocope (Present Tense -ar)
+                // Rule: If ends in -ar and > 3 chars, drop -r or -ar depending on dialect
+                // Pitemål usually drops the 'r' or the whole suffix 'ar' -> 'a' or nothing.
+                // Let's go with dropping 'r' -> 'a' as safe, or dropping 'ar' for strong apocope.
+                // Your feedback: "dansar -> dans"
+                if (useVerbs && word.endsWith("ar") && word.length > 3) {
+                     // Check if it's likely a verb (heuristic)
+                     word = word.slice(0, -2); // Drop 'ar' completely
+                     appliedRule = "Verb Apocope (-ar)";
                 }
 
-                // 2. Consonant Transforms
-                if (useConsonants) {
-                    // Thick L rule: rd -> L, rt -> Lt
-                    if (processed.includes('rd')) {
-                        processed = processed.replace(/rd/g, 'L');
-                        stepLog.push("Thick L: rd->L");
-                    }
-                    // Initial V -> W
-                    if (processed.startsWith('v')) {
-                        processed = "w" + processed.substring(1);
-                        stepLog.push("Initial: v->w");
+                // C. Suffixes
+                if (useSuffixes) {
+                    for (let rule of suffixRules) {
+                        if (word.endsWith(rule.suffix)) {
+                            // Check if word is long enough to have a suffix
+                            if (word.length > rule.suffix.length + 2) { 
+                                word = word.slice(0, -rule.suffix.length) + rule.replace;
+                                appliedRule = rule.name;
+                                break;
+                            }
+                        }
                     }
                 }
 
-                // 3. Morphology & Apocope (The big Pitemål feature)
-                if (useApocope) {
-                    // Rule: If word > 1 syllable and ends in vowel, drop it
-                    // Simple syllable count heuristic (vowel groups)
-                    const vowels = processed.match(/[aeiouyåäö]/g);
-                    if (vowels && vowels.length > 1 && processed.match(/[a]$/)) {
-                        processed = processed.slice(0, -1);
-                        stepLog.push("Apocope: Drop final -a");
+                // D. Phonology (General Rules)
+                if (usePhono) {
+                    for (let rule of phonologyRules) {
+                        if (word.match(rule.regex)) {
+                            word = word.replace(rule.regex, rule.replace);
+                            if (appliedRule === "Raw") appliedRule = rule.name;
+                        }
                     }
                 }
                 
-                // 4. Definite Article Suffixes (Noun Morphing)
-                // en boken -> n båoka
-                if (useMorph) {
-                    if (processed.endsWith('en')) {
-                        // boken -> bok-a (simplified definite feminine/neutral logic)
-                        processed = processed.replace(/en$/, 'a');
-                         stepLog.push("Morph: -en -> -a");
-                    }
-                    if (processed.endsWith('et')) {
-                        // huset -> huse
-                        processed = processed.replace(/et$/, 'e');
-                        stepLog.push("Morph: -et -> -e");
+                // E. General Apocope (Final -a drop)
+                // Pitemål famously drops final -a in many nouns and infinitives
+                // pratar -> prata -> prat
+                if (word.endsWith('a') && word.length > 3) {
+                    // Check if we haven't already apocoped a verb
+                    if (!appliedRule.includes("Apocope")) {
+                        word = word.slice(0, -1);
+                        appliedRule += " + Final Apocope";
                     }
                 }
             }
 
-            // Restore Case
-            if (token[0] === token[0].toUpperCase()) {
-                processed = processed.charAt(0).toUpperCase() + processed.slice(1);
+            // Restore capitalization
+            if (original[0] === original[0].toUpperCase()) {
+                word = word.charAt(0).toUpperCase() + word.slice(1);
             }
-            
-            if (stepLog.length > 0) log(`${original}: ${stepLog.join(', ')}`);
-            translatedTokens.push(processed);
-        }
 
-        outputField.value = translatedTokens.join('');
+            if (original.toLowerCase() !== word.toLowerCase()) {
+                log(original, word, appliedRule);
+            }
+
+            return word;
+        });
+
+        outputField.value = processedTokens.join('');
     }
 </script>
 
