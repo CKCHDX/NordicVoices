@@ -16,6 +16,7 @@
         table { width: 100%; border-collapse: collapse; }
         th, td { text-align: left; padding: 8px; border-bottom: 1px solid #ddd; }
         th { background-color: #f2f2f2; }
+        .note { font-size: 0.9em; color: #666; background: #fff3cd; padding: 5px 10px; border-radius: 4px; display: inline-block; margin-top: 5px; }
     </style>
 </head>
 <body>
@@ -24,20 +25,28 @@
     <h1>🗹️ Swedish ↔ Bondska Translator</h1>
     <p>Enter Swedish text to translate it into Bondska. The translation uses a dictionary for common words and applies basic phonetic rules for others.</p>
     
-    <textarea id="swedish-text" rows="6" placeholder="Enter Swedish text here..."></textarea>
-    <button onclick="translate()">🔄 Translate</button>
+    <textarea id="swedish-text" rows="6" placeholder="Enter Swedish text here (e.g., 'Hej vad heter du')..."></textarea>
+    <button onclick="convertText()">🔄 Translate</button>
     
     <h3>📖 Bondska Translation:</h3>
     <div id="result">Translation will appear here.</div>
 
     <div class="section">
         <h2>🗣️ Bondska Alphabet & Pronunciation</h2>
-        <p>The Bondska alphabet uses the standard Swedish alphabet (A-Ö). The unique sounds of the dialect come from different pronunciations and sound combinations, as detailed in the project's <code>ALPHABET.md</code> file. The characters <code>Â</code> and <code>Ô</code> are not standard and have been removed.</p>
+        <p>The Bondska alphabet extends the standard Swedish alphabet to represent its unique vowel sounds.</p>
+        
+        <h3>Special Characters</h3>
+        <ul>
+            <li><b>Â / â</b>: Represents a very fronted "a" sound (like in English "cat"). Common in Ume and Burträsk dialects.</li>
+            <li><b>Ô / ô</b>: A sound between "ö" and "o" (often a schwa-like central vowel).</li>
+            <li><b>Å / å</b>: Pronounced more open than in Swedish, often replacing standard "a".</li>
+        </ul>
+        
         <p><b>Key Phonetic Features:</b></p>
         <ul>
-            <li><b>Vowel Shifts:</b> Many Swedish vowels are pronounced differently (e.g., Swedish /o/ often becomes /u/).</li>
-            <li><b>Diphthongs:</b> Combination of vowels to create gliding sounds not common in Standard Swedish.</li>
-            <li><b>Retroflex Consonants:</b> Unique "thick" L and "sh" sounds (written as `sj`, `skj`, `stj`).</li>
+            <li><b>Vowel Shifts:</b> Standard Swedish /o/ often becomes /u/ (<i>bok</i> → <i>buk</i>).</li>
+            <li><b>W Sound:</b> The English /w/ sound is preserved in many words (<i>var</i> → <i>wå</i> or <i>wars</i>).</li>
+            <li><b>Retroflex Consonants:</b> "Thick L" and retroflex "sh" (<i>sj</i>, <i>skj</i>) are prominent.</li>
         </ul>
     </div>
 
@@ -46,28 +55,21 @@
         <p>The translation process follows these steps:</p>
         <ol>
             <li><b>Normalization:</b> The input text is converted to lowercase.</li>
-            <li><b>Dictionary Lookup:</b> Each word is checked against a dictionary of common Bondska words. If a match is found, it's replaced directly.</li>
-            <li><b>Phonetic Rules:</b> If a word is not in the dictionary, a series of basic phonetic rules are applied to approximate the Bondska pronunciation.</li>
+            <li><b>Dictionary Lookup:</b> Checks against a database of common Bondska words (from Kalix, Ume, and Skellefteå varieties).</li>
+            <li><b>Phonetic Rules:</b> Applies vowel shifts and consonant changes for unknown words.</li>
         </ol>
         
-        <h3>Phonetic Rules Applied:</h3>
-        <ul>
-            <li><code>a</code> → <code>å</code> (e.g., <i>mat</i> → <i>måt</i>)</li>
-            <li><code>e</code> → <code>ä</code> (e.g., <i>se</i> → <i>sä</i>)</li>
-            <li><code>o</code> → <code>u</code> (e.g., <i>bok</i> → <i>buk</i>)</li>
-        </ul>
-
         <h3>Dictionary Sample:</h3>
         <table>
             <thead>
-                <tr><th>Swedish</th><th>Bondska</th></tr>
+                <tr><th>Swedish</th><th>Bondska (Variant)</th></tr>
             </thead>
             <tbody>
-                <tr><td>jag</td><td>i</td></tr>
-                <tr><td>är</td><td>jer</td></tr>
-                <tr><td>inte</td><td>int</td></tr>
-                <tr><td>det</td><td>he</td></tr>
-                <tr><td>hej</td><td>heddu</td></tr>
+                <tr><td>jag</td><td>i / je</td></tr>
+                <tr><td>är</td><td>jer / jär</td></tr>
+                <tr><td>inte</td><td>int / äint</td></tr>
+                <tr><td>vad</td><td>wå</td></tr>
+                <tr><td>huset</td><td>häuse / börninga</td></tr>
             </tbody>
         </table>
     </div>
@@ -75,34 +77,58 @@
 </div>
 
 <script>
+    // Dictionary combining multiple Westrobothnian variants (Kalix, Ume, Skellefteå)
     const dictionary = {
+        // Pronouns
         "jag": "i",
-        "du": "de",
-        "han": "han",
-        "hon": "hon",
-        "vi": "we",
+        "du": "do", // or 'dö'
+        "han": "han", // often 'hån'
+        "hon": "ho",  // or 'hö'
+        "vi": "ve",
         "ni": "je",
         "de": "döm",
-        "det": "he",
+        
+        // Common Verbs
         "är": "jer",
+        "var": "wår",
+        "heter": "hät",
+        "kan": "kån",
+        "vill": "will",
+        "ska": "sku",
+        "gå": "gå", // or 'ga'
+        
+        // Common Words
         "inte": "int",
-        "vad": "vo",
-        "var": "vosch",
-        "hus": "heos",
-        "bok": "beok",
-        "till": "deill",
+        "det": "he",
+        "vad": "wå",
+        "var": "wars", // where
+        "här": "hänn",
+        "där": "dänn",
+        "nu": "nö",
+        "hus": "häus",
+        "bok": "buk",
+        "katt": "kått",
+        "hund": "hunn",
+        "skola": "skul",
+        
+        // Phrases
         "hej": "heddu",
         "tack": "takk",
         "ja": "joh",
-        "nej": "ae",
-        "mycket": "myttje",
-        "på": "oppa"
+        "nej": "nä", // or 'ae'
+        "mycket": "myttje"
     };
 
     const phoneticRules = [
-        { from: /a/g, to: "å" },
-        { from: /e/g, to: "ä" },
-        { from: /o/g, to: "u" }
+        // Vowel Shifts
+        { from: /a/g, to: "å" },  // Mat -> Måt
+        { from: /e/g, to: "ä" },  // Se -> Sä
+        { from: /o/g, to: "u" },  // Bok -> Buk
+        { from: /ö/g, to: "ô" },  // Död -> Dôd (approx)
+        
+        // Consonant Shifts
+        { from: /^v/g, to: "w" }, // Var -> War (if not in dict)
+        { from: /ng$/g, to: "nk" } // Lång -> Lånk/La:k (simplified)
     ];
 
     function applyPhoneticRules(word) {
@@ -113,25 +139,28 @@
         return transformedWord;
     }
 
-    function translateToBondska(text) {
-        const words = text.toLowerCase().split(/(\s+|[.,!?-])/);
-        const translatedWords = words.map(word => {
-            if (dictionary[word]) {
-                return dictionary[word];
+    function convertText() {
+        // Use a simple regex to split but keep delimiters (spaces, punctuation)
+        const input = document.getElementById("swedish-text").value;
+        // Split by non-word characters but keep them
+        const tokens = input.toLowerCase().split(/([^\wåäöÅÄÖ]+)/);
+        
+        const translatedTokens = tokens.map(token => {
+            // If it's just whitespace or punctuation, return as is
+            if (!token.match(/[\wåäöÅÄÖ]/)) {
+                return token;
             }
-            // Check for punctuation and spaces
-            if (word.match(/\s+|[.,!?-]/)) {
-                return word;
+            
+            // Dictionary lookup
+            if (dictionary[token]) {
+                return dictionary[token];
             }
-            return applyPhoneticRules(word);
+            
+            // Fallback to rules
+            return applyPhoneticRules(token);
         });
-        return translatedWords.join("");
-    }
-
-    function translate() {
-        const swedishText = document.getElementById("swedish-text").value;
-        const bondskaText = translateToBondska(swedishText);
-        document.getElementById("result").textContent = bondskaText;
+        
+        document.getElementById("result").textContent = translatedTokens.join("");
     }
 </script>
 
