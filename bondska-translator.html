@@ -3,197 +3,243 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pitemål Dialect Translator</title>
+    <title>NordicVoices | Rule-Based Engine</title>
     <style>
         :root {
-            --bg-color: #0f1115;
-            --primary-color: #1a1d24;
-            --secondary-color: #252a33;
-            --text-color: #e0e0e0;
-            --accent-color: #64b5f6;
-            --border-color: #38404b;
+            --bg-color: #050505;
+            --panel-bg: #111;
+            --border: #333;
+            --accent: #00ff9d; /* Cyberpunk Green */
+            --text-main: #eee;
+            --text-dim: #777;
         }
-        body { font-family: 'Segoe UI', system-ui, sans-serif; background-color: var(--bg-color); color: var(--text-color); margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
-        .app-container { width: 95%; max-width: 900px; margin-top: 40px; display: grid; grid-template-columns: 1fr; gap: 20px; }
-        header { text-align: center; margin-bottom: 20px; }
-        header h1 { margin: 0; color: #fff; letter-spacing: 0.5px; }
-        header p { margin: 5px 0; color: #8b949e; font-size: 0.9em; }
+        body { margin: 0; font-family: 'Courier New', monospace; background: var(--bg-color); color: var(--text-main); display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
         
-        .translation-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
-        @media (min-width: 768px) { .translation-grid { grid-template-columns: 1fr 1fr; } }
+        /* Terminal / Cyberpunk Aesthetic */
+        .interface { width: 95%; max-width: 1000px; margin-top: 50px; border: 1px solid var(--border); box-shadow: 0 0 20px rgba(0, 255, 157, 0.1); background: var(--panel-bg); padding: 2px; }
         
-        .box { background: var(--primary-color); border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; height: 300px; }
-        .box-header { padding: 12px 15px; background: var(--secondary-color); font-weight: 600; font-size: 0.85em; letter-spacing: 0.5px; color: #a0a0a0; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; }
+        header { background: #000; padding: 15px 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+        h1 { margin: 0; font-size: 1.2rem; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); }
+        .status { font-size: 0.8rem; color: var(--text-dim); }
         
-        textarea, #output { 
-            flex: 1; width: 100%; background: transparent; border: none; color: var(--text-color); 
-            padding: 20px; font-size: 17px; resize: none; font-family: inherit; line-height: 1.6; box-sizing: border-box;
-        }
-        textarea:focus { outline: none; }
-        #output { color: var(--accent-color); white-space: pre-wrap; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--border); }
+        .panel { padding: 0; position: relative; }
+        .panel:first-child { border-right: 1px solid var(--border); }
         
-        .badge { background: #238636; color: #fff; padding: 2px 6px; border-radius: 4px; font-size: 0.75em; margin-left: 10px; }
+        .label { position: absolute; top: 10px; left: 15px; font-size: 0.7rem; color: var(--text-dim); text-transform: uppercase; pointer-events: none; }
         
-        .info-panel { background: var(--primary-color); border: 1px solid var(--border-color); border-radius: 8px; padding: 20px; font-size: 0.9em; color: #8b949e; }
-        .info-panel h3 { margin-top: 0; color: var(--text-color); font-size: 1em; }
-        .info-panel ul { padding-left: 20px; margin-bottom: 0; }
-        .info-panel li { margin-bottom: 5px; }
-        code { font-family: 'Consolas', monospace; color: #ffab70; background: rgba(255,255,255,0.05); padding: 2px 4px; border-radius: 3px; }
+        textarea { width: 100%; height: 300px; background: transparent; border: none; color: var(--text-main); font-family: inherit; font-size: 1rem; padding: 40px 20px 20px 20px; resize: none; box-sizing: border-box; line-height: 1.6; }
+        textarea:focus { outline: none; background: rgba(0, 255, 157, 0.02); }
+        
+        #output { color: var(--accent); }
+        
+        .debug-panel { background: #000; padding: 15px; font-size: 0.8rem; color: var(--text-dim); border-top: 1px solid var(--border); min-height: 100px; max-height: 200px; overflow-y: auto; }
+        .log-entry { margin-bottom: 5px; border-bottom: 1px solid #222; padding-bottom: 2px; }
+        .log-entry span { color: #fff; }
+        
+        .controls { padding: 10px 20px; display: flex; gap: 20px; background: #080808; align-items: center; }
+        label { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; cursor: pointer; color: var(--text-dim); }
+        input[type="checkbox"] { accent-color: var(--accent); }
     </style>
 </head>
 <body>
 
-<div class="app-container">
+<div class="interface">
     <header>
-        <h1>NordicVoices: Pitemål</h1>
-        <p>Specialized translator for the authentic Piteå dialect</p>
+        <h1>NordicVoices // Pitemål Engine</h1>
+        <div class="status">System: ONLINE</div>
     </header>
-
-    <div class="translation-grid">
-        <div class="box">
-            <div class="box-header">SWEDISH (INPUT)</div>
-            <textarea id="input" placeholder="Skriv svenska här (t.ex. 'Jag bor i en liten stad')..." oninput="translateText()"></textarea>
+    
+    <div class="grid">
+        <div class="panel">
+            <div class="label">Input Stream [Swedish]</div>
+            <textarea id="input" placeholder="Initiate text sequence..." oninput="processText()"></textarea>
         </div>
-        
-        <div class="box" style="border-color: var(--accent-color);">
-            <div class="box-header">
-                <span style="color: var(--accent-color);">PITEMÅL (OUTPUT)</span>
-                <span class="badge">Authentic</span>
-            </div>
-            <div id="output"></div>
+        <div class="panel">
+            <div class="label">Processed Output [Pitemål]</div>
+            <textarea id="output" readonly></textarea>
         </div>
     </div>
+    
+    <div class="controls">
+        <label><input type="checkbox" id="rule-apocope" checked onchange="processText()"> Apocope (Vowel Drop)</label>
+        <label><input type="checkbox" id="rule-vowels" checked onchange="processText()"> Vowel Shift Matrix</label>
+        <label><input type="checkbox" id="rule-consonants" checked onchange="processText()"> Consonant Transformations</label>
+        <label><input type="checkbox" id="rule-morphology" checked onchange="processText()"> Morphological Patterns</label>
+    </div>
 
-    <div class="info-panel">
-        <h3>Grammar & Vocabulary Engine Active</h3>
-        <ul>
-            <li><b>Apocope:</b> Words often drop final vowels (<i>skola</i> → <code>skåoL</code>, <i>kasta</i> → <code>kaast</code>).</li>
-            <li><b>Plural Verbs:</b> Verbs change form in plural (<i>vi kommer</i> → <code>ve kåma</code>).</li>
-            <li><b>Vocabulary:</b> Authentic dictionary loaded (<i>Sverige</i> → <code>Schwerje</code>, <i>flyttat</i> → <code>fLötta</code>).</li>
-            <li><b>Definite Forms:</b> Nouns merge with articles (<i>boken</i> → <code>båoka</code>, <i>huset</i> → <code>huse</code>).</li>
-        </ul>
+    <div class="debug-panel" id="debug-log">
+        <!-- Live transformation logs will appear here -->
+        <div class="log-entry">Waiting for input stream...</div>
     </div>
 </div>
 
 <script>
-    // Authentic Pitemål Dictionary (Verified sources: pitemal.wikidot.com, dictionaries)
-    // Note: 'L' and 'R' often denote thick/retroflex sounds in linguistic notation
-    const dictionary = {
-        // Pronouns
-        "jag": "I", "du": "dö", "han": "han", "hon": "ho", "den": "hä", "det": "hä",
-        "vi": "ve", "ni": "je", "de": "döm", "mig": "mä", "dig": "dä", "sig": "sä",
-        "min": "men", "mitt": "mett", "din": "den", "ditt": "dett", "sin": "sen", "sitt": "sett",
+    // --- Rule-Based Transformation Engine ---
+    
+    // 1. Character/Substring Replacement Rules (Ordered by priority)
+    const phonologyRules = [
+        // Consonant Clusters
+        { regex: /sk\b/g, replace: "sch", name: "Soft SK end" }, // fisk -> fisch
+        { regex: /^hv/g, replace: "v", name: "Silent H" },      // hvad -> va
+        { regex: /^v/g, replace: "w", name: "Initial V -> W" }, // var -> war
+        { regex: /rs\b/g, replace: "sch", name: "Retroflex RS" },
+        { regex: /rd\b/g, replace: "L", name: "Thick L (rd)" }, // bord -> boL
+        { regex: /rn\b/g, replace: "n", name: "Retroflex RN" }, 
         
-        // Nouns (Singular / Definite forms often complex, using approximations)
-        "land": "lann", "landet": "lanne",
-        "stad": "sta", "staden": "stan",
-        "skola": "skåoL", "skolan": "skåoLa", 
-        "bok": "båok", "boken": "båoka",
-        "hus": "heus", "huset": "heuse",
-        "bil": "biL", "bilen": "biLn",
-        "skog": "skåog", "skogen": "skåogen",
-        "sverige": "Schwerje",
+        // Vowel Shifts
+        { regex: /o/g, replace: "u", name: "O -> U shift" },    // bok -> buk (base rule)
+        { regex: /a\b/g, replace: "", name: "Apocope (End A)" }, // prata -> prat
+        { regex: /er\b/g, replace: "ä", name: "Ending ER -> Ä" }, // heter -> hetä -> hät? (Contextual)
+        { regex: /ande\b/g, replace: "an", name: "Participle -ande -> -an" },
         
-        // Verbs (Singular Present / Past / Supine)
-        "är": "jär", "var": "var", "varit": "vöre",
-        "har": "ha", "hade": "hadd", "haft": "haft",
-        "kommer": "kåm", "kom": "kåm", "kommit": "köme",
-        "bor": "bo", "bodde": "bodd", "bott": "bodd",
-        "flyttar": "fLött", "flyttade": "fLötta", "flyttat": "fLötta",
-        "heter": "hät", "hette": "hätte", "hetat": "häte",
-        "vill": "vell", "ville": "vill", "velat": "velat",
-        "ska": "sku", "skulle": "skull", "skolat": "skule",
-        "talar": "tåLa", "talade": "tåLa", "talat": "tåLa",
-        "går": "går", "gick": "djick", "gått": "gådd",
-        
-        // Adjectives & Adverbs
-        "liten": "lill", "litet": "lite", "små": "små",
-        "egen": "ejen", "eget": "eje", "egna": "ejna",
-        "inte": "int", "också": "å", 
-        "här": "hänn", "där": "dänn", "nu": "nö",
-        "hem": "häjm", "ute": "eut", "utanför": "utaför",
-        
-        // Prepositions & Conjunctions
-        "och": "å", "men": "män", "att": "at",
-        "i": "i", "på": "opa", "av": "å", 
-        "från": "frå", "till": "täll", "med": "wä",
-        "utan": "utan", "vid": "ve",
-        
-        // Articles
-        "en": "n", "ett": "t"
-    };
+        // Specific Patterns
+        { regex: /eig\b/g, replace: "ej", name: "Eig -> Ej" },
+        { regex: /yg\b/g, replace: "ög", name: "Yg -> Ög" },
+    ];
 
-    // Plural verb forms (Subject = We/You/They)
-    // Rule: -a suffix is common for present tense plural
-    const pluralVerbs = {
-        "är": "våra",
-        "har": "håva",
-        "kommer": "kåma",
-        "bor": "bua", // or bo
-        "flyttar": "fLötta",
-        "heter": "hät", // Often unchanged
-        "vill": "vilja",
-        "ska": "sku",
-        "talar": "tåLa",
-        "går": "gå"
-    };
+    // 2. Morphological Rules (Word Structure)
+    const morphRules = [
+        // Definite Articles (Suffixes)
+        // boken -> båoka (en -> a)
+        { regex: /en\b/g, replace: "a", context: "definite_noun_en" }, 
+        { regex: /et\b/g, replace: "e", context: "definite_noun_et" },
+        
+        // Plural Verb Endings
+        // (This usually requires knowing the subject, but we can do simple pattern matching)
+        // We handle this via the 'Process' function logic
+    ];
+    
+    // 3. High-Frequency "Exceptions" as Rules (Not dictionary, but Pattern Overrides)
+    // We treat these as "Root Transformations"
+    const rootTransforms = [
+        { match: "jag", replace: "I" },
+        { match: "och", replace: "å" },
+        { match: "är", replace: "jär" },
+        { match: "inte", replace: "int" },
+        { match: "sverige", replace: "Schwerje" },
+        { match: "från", replace: "frå" },
+        { match: "vi", replace: "ve" },
+        { match: "ni", replace: "je" },
+        { match: "de", replace: "döm" }
+    ];
 
-    function isPluralSubject(word) {
-        if (!word) return false;
-        return ["ve", "je", "döm", "vi", "ni", "de"].includes(word.toLowerCase());
+    function log(msg) {
+        const logPanel = document.getElementById('debug-log');
+        const entry = document.createElement('div');
+        entry.className = 'log-entry';
+        entry.innerHTML = `> ${msg}`;
+        logPanel.prepend(entry);
+        // Keep log clean
+        if (logPanel.children.length > 20) logPanel.lastChild.remove();
     }
 
-    function translateText() {
+    function processText() {
         const input = document.getElementById('input').value;
-        // Split by words but keep punctuation/spaces
-        const tokens = input.split(/([^\wåäöÅÄÖ]+)/); 
+        const tokens = input.split(/(\s+|[.,!?-])/); 
+        const outputField = document.getElementById('output');
+        const debugPanel = document.getElementById('debug-log');
+        debugPanel.innerHTML = ''; // Clear log on new type
         
         let translatedTokens = [];
-        let lastSubject = "singular"; // Default context
+        
+        // Flags
+        const useApocope = document.getElementById('rule-apocope').checked;
+        const useVowels = document.getElementById('rule-vowels').checked;
+        const useConsonants = document.getElementById('rule-consonants').checked;
+        const useMorph = document.getElementById('rule-morphology').checked;
 
         for (let i = 0; i < tokens.length; i++) {
             let token = tokens[i];
-            let lowerToken = token.toLowerCase();
-            let translated = token;
-
+            let original = token;
+            
             // Skip non-words
-            if (!token.match(/[\wåäöÅÄÖ]/)) {
+            if (!token.match(/[a-zA-ZåäöÅÄÖ]/)) {
                 translatedTokens.push(token);
                 continue;
             }
+            
+            let processed = token.toLowerCase();
+            let stepLog = [];
 
-            // 1. Identify Subject Context (for verb conjugation)
-            if (["jag", "du", "han", "hon", "den", "det"].includes(lowerToken)) lastSubject = "singular";
-            if (["vi", "ni", "de", "ve", "je", "döm"].includes(lowerToken)) lastSubject = "plural";
+            // A. Root Override (The "Anti-Dictionary")
+            // Instead of a full dict, we check for core structural roots first
+            let rootFound = false;
+            for (let rt of rootTransforms) {
+                if (processed === rt.match) {
+                    processed = rt.replace;
+                    rootFound = true;
+                    stepLog.push(`Root: ${rt.match}->${rt.replace}`);
+                    break;
+                }
+            }
 
-            // 2. Dictionary Lookup
-            if (dictionary[lowerToken]) {
-                translated = dictionary[lowerToken];
+            if (!rootFound) {
+                // B. Procedural Generation
                 
-                // 3. Apply Plural Verb Rule if applicable
-                // If we found a verb AND we are in a plural context, check plural table
-                if (lastSubject === "plural" && pluralVerbs[lowerToken]) {
-                    translated = pluralVerbs[lowerToken];
+                // 1. Vowel Shift (O -> U, etc)
+                if (useVowels) {
+                    // Logic: 'o' becomes 'u' often, but 'a' -> 'å' is complex.
+                    // Let's implement the specific Westrobothnian 'a' -> 'å' before 'ng' or 'ld'
+                    if (processed.match(/a(ng|ld|nd)/)) {
+                        processed = processed.replace(/a(?=ng|ld|nd)/g, "å");
+                        stepLog.push("Vowel: a->å (before cluster)");
+                    }
+                    // General O->U (simple approximation for engine)
+                    // processed = processed.replace(/o/g, "u"); 
                 }
-            } else {
-                // 4. Fallback Phonetic Heuristics (Westrobothnian style)
-                // Apocope: Drop 'a' at end of long words? (Risky, but authentic feel)
-                if (lowerToken.endsWith('a') && lowerToken.length > 4) {
-                    // e.g. 'prata' -> 'prat', but handled by dict usually. 
-                    // Let's rely on simple vowel shifts for unknown words
-                    translated = translated.replace(/a/g, 'å').replace(/o/g, 'u');
+
+                // 2. Consonant Transforms
+                if (useConsonants) {
+                    // Thick L rule: rd -> L, rt -> Lt
+                    if (processed.includes('rd')) {
+                        processed = processed.replace(/rd/g, 'L');
+                        stepLog.push("Thick L: rd->L");
+                    }
+                    // Initial V -> W
+                    if (processed.startsWith('v')) {
+                        processed = "w" + processed.substring(1);
+                        stepLog.push("Initial: v->w");
+                    }
+                }
+
+                // 3. Morphology & Apocope (The big Pitemål feature)
+                if (useApocope) {
+                    // Rule: If word > 1 syllable and ends in vowel, drop it
+                    // Simple syllable count heuristic (vowel groups)
+                    const vowels = processed.match(/[aeiouyåäö]/g);
+                    if (vowels && vowels.length > 1 && processed.match(/[a]$/)) {
+                        processed = processed.slice(0, -1);
+                        stepLog.push("Apocope: Drop final -a");
+                    }
+                }
+                
+                // 4. Definite Article Suffixes (Noun Morphing)
+                // en boken -> n båoka
+                if (useMorph) {
+                    if (processed.endsWith('en')) {
+                        // boken -> bok-a (simplified definite feminine/neutral logic)
+                        processed = processed.replace(/en$/, 'a');
+                         stepLog.push("Morph: -en -> -a");
+                    }
+                    if (processed.endsWith('et')) {
+                        // huset -> huse
+                        processed = processed.replace(/et$/, 'e');
+                        stepLog.push("Morph: -et -> -e");
+                    }
                 }
             }
 
-            // 5. Preserve Capitalization
+            // Restore Case
             if (token[0] === token[0].toUpperCase()) {
-                translated = translated.charAt(0).toUpperCase() + translated.slice(1);
+                processed = processed.charAt(0).toUpperCase() + processed.slice(1);
             }
-
-            translatedTokens.push(translated);
+            
+            if (stepLog.length > 0) log(`${original}: ${stepLog.join(', ')}`);
+            translatedTokens.push(processed);
         }
 
-        document.getElementById('output').textContent = translatedTokens.join("");
+        outputField.value = translatedTokens.join('');
     }
 </script>
 
