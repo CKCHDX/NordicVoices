@@ -3,97 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NordicVoices | Pitemål Engine v2.0</title>
+    <title>NordicVoices | Pitemål Engine v2.5</title>
     <style>
         :root {
-            --bg-color: #050505;
-            --panel-bg: #111;
+            --bg-color: #020202;
+            --panel-bg: #0a0a0a;
             --border: #333;
-            --accent: #00ff9d;
-            --text-main: #eee;
-            --text-dim: #777;
+            --accent: #ff0055; /* Cyberpunk Red/Pink */
+            --accent-sec: #00e5ff; /* Cyan */
+            --text-main: #f0f0f0;
+            --text-dim: #666;
         }
-        body { margin: 0; font-family: 'Courier New', monospace; background: var(--bg-color); color: var(--text-main); display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+        body { margin: 0; font-family: 'JetBrains Mono', 'Courier New', monospace; background: var(--bg-color); color: var(--text-main); display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
         
-        .interface { width: 95%; max-width: 1200px; margin-top: 50px; border: 1px solid var(--border); box-shadow: 0 0 20px rgba(0, 255, 157, 0.1); background: var(--panel-bg); display: flex; flex-direction: column; }
+        .interface { width: 95%; max-width: 1400px; margin-top: 40px; border: 1px solid var(--border); box-shadow: 0 0 40px rgba(255, 0, 85, 0.05); background: var(--panel-bg); display: flex; flex-direction: column; border-radius: 4px; overflow: hidden; }
         
-        header { background: #000; padding: 15px 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-        h1 { margin: 0; font-size: 1.2rem; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); }
-        .status { font-size: 0.8rem; color: var(--text-dim); }
+        header { background: #000; padding: 20px 25px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+        h1 { margin: 0; font-size: 1.4rem; letter-spacing: 1px; font-weight: 700; color: #fff; }
+        h1 span { color: var(--accent); }
+        .status { font-size: 0.75rem; color: var(--accent-sec); border: 1px solid var(--accent-sec); padding: 4px 8px; border-radius: 2px; letter-spacing: 1px; }
         
-        .grid { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--border); flex-grow: 1; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--border); flex-grow: 1; min-height: 500px; }
         .panel { padding: 0; position: relative; display: flex; flex-direction: column; }
         .panel:first-child { border-right: 1px solid var(--border); }
         
-        .label { padding: 10px 15px; font-size: 0.7rem; color: var(--text-dim); text-transform: uppercase; background: #080808; border-bottom: 1px solid var(--border); }
+        .label { padding: 12px 20px; font-size: 0.7rem; color: var(--text-dim); text-transform: uppercase; background: #050505; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; }
+        .label-badge { color: var(--accent-sec); }
         
-        textarea { width: 100%; height: 400px; background: transparent; border: none; color: var(--text-main); font-family: inherit; font-size: 1rem; padding: 20px; resize: none; box-sizing: border-box; line-height: 1.6; flex-grow: 1; }
-        textarea:focus { outline: none; background: rgba(0, 255, 157, 0.02); }
+        textarea { width: 100%; height: 100%; background: transparent; border: none; color: var(--text-main); font-family: inherit; font-size: 1.1rem; padding: 25px; resize: none; box-sizing: border-box; line-height: 1.6; flex-grow: 1; }
+        textarea:focus { outline: none; background: rgba(255, 0, 85, 0.01); }
+        textarea::placeholder { color: #333; }
         
         #output { color: var(--accent); }
         
-        .debug-panel { background: #000; padding: 15px; font-size: 0.8rem; color: var(--text-dim); border-top: 1px solid var(--border); height: 150px; overflow-y: auto; font-family: 'Consolas', monospace; }
-        .log-entry { margin-bottom: 4px; border-bottom: 1px solid #1a1a1a; padding-bottom: 2px; display: flex; gap: 10px; }
-        .log-orig { color: #888; width: 100px; }
-        .log-trans { color: var(--accent); width: 100px; }
-        .log-rule { color: #555; font-style: italic; }
+        .debug-panel { background: #000; padding: 15px 25px; font-size: 0.8rem; color: var(--text-dim); border-top: 1px solid var(--border); height: 180px; overflow-y: auto; font-family: 'JetBrains Mono', monospace; }
+        .log-entry { margin-bottom: 6px; border-bottom: 1px solid #111; padding-bottom: 4px; display: grid; grid-template-columns: 120px 120px 1fr; gap: 15px; align-items: center; }
+        .log-orig { color: #888; }
+        .log-trans { color: var(--accent); font-weight: bold; }
+        .log-rule { color: var(--accent-sec); font-size: 0.75rem; opacity: 0.8; }
         
-        .controls { padding: 15px 20px; display: flex; gap: 20px; background: #080808; align-items: center; flex-wrap: wrap; }
-        label { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; cursor: pointer; color: var(--text-dim); }
-        input[type="checkbox"] { accent-color: var(--accent); }
+        .controls { padding: 20px 25px; display: flex; gap: 30px; background: #080808; align-items: center; flex-wrap: wrap; border-top: 1px solid var(--border); }
+        label { display: flex; align-items: center; gap: 10px; font-size: 0.85rem; cursor: pointer; color: #999; transition: color 0.2s; }
+        label:hover { color: #fff; }
+        input[type="checkbox"] { accent-color: var(--accent); width: 16px; height: 16px; cursor: pointer; }
     </style>
 </head>
 <body>
 
 <div class="interface">
     <header>
-        <h1>NordicVoices // Pitemål Engine v2.0</h1>
-        <div class="status">Ruleset: AUTHENTIC</div>
+        <h1>NordicVoices // <span>Pitemål</span></h1>
+        <div class="status">SYSTEM ACTIVE</div>
     </header>
     
     <div class="grid">
         <div class="panel">
-            <div class="label">Input Stream [Swedish]</div>
-            <textarea id="input" placeholder="Enter text to process..." oninput="processText()"></textarea>
+            <div class="label">
+                <span>Input Stream [Swedish]</span>
+                <span class="label-badge">TXT_IN</span>
+            </div>
+            <textarea id="input" placeholder="Skriv din text här..." oninput="processText()"></textarea>
         </div>
         <div class="panel">
-            <div class="label">Processed Output [Pitemål]</div>
+            <div class="label">
+                <span>Output Stream [Pitemål]</span>
+                <span class="label-badge">TXT_OUT</span>
+            </div>
             <textarea id="output" readonly></textarea>
         </div>
     </div>
     
     <div class="controls">
-        <label><input type="checkbox" id="rule-particles" checked onchange="processText()"> Grammar Particles (men->män)</label>
-        <label><input type="checkbox" id="rule-suffixes" checked onchange="processText()"> Smart Suffixes (-het->he)</label>
-        <label><input type="checkbox" id="rule-verbs" checked onchange="processText()"> Verb Apocope (-ar->ø)</label>
-        <label><input type="checkbox" id="rule-phonology" checked onchange="processText()"> Phonetic Shifts (v->w)</label>
+        <label><input type="checkbox" id="rule-particles" checked onchange="processText()"> Grammar Particles (men -> män)</label>
+        <label><input type="checkbox" id="rule-suffixes" checked onchange="processText()"> Smart Suffixes (-het -> -he)</label>
+        <label><input type="checkbox" id="rule-verbs" checked onchange="processText()"> Verb Apocope (-ar/-er -> ø)</label>
+        <label><input type="checkbox" id="rule-thick-l" checked onchange="processText()"> Thick L (rt/rd -> L)</label>
+        <label><input type="checkbox" id="rule-phono" checked onchange="processText()"> Vowel Shifts (o -> u)</label>
     </div>
 
     <div class="debug-panel" id="debug-log">
-        <div class="log-entry">System ready. Awaiting input...</div>
+        <div class="log-entry" style="grid-template-columns: 1fr;">System ready. Engine loaded with 5 core modules.</div>
     </div>
 </div>
 
 <script>
-    // --- Advanced Rule Engine v2.0 ---
+    // --- Pitemål Engine v2.5 ---
 
-    // 1. Grammatical Particles (Function Words)
-    // High priority structural changes
+    // 1. Grammatical Particles & Function Words
     const particleRules = {
         "men": "män",
         "och": "å",
         "att": "at",
-        "som": "som", // Unchanged usually
+        "som": "som",
         "det": "hä", // Specific object reference
         "den": "hä",
-        "de": "döm", // Subject "they" (careful with "the")
+        "de": "döm", // Subject "they"
+        "dem": "döm",
         "vi": "ve",
         "ni": "je",
         "du": "dö",
         "dig": "dä",
         "mig": "mä",
         "sig": "sä",
-        "från": "frå",
+        "min": "men",
+        "mitt": "mett",
+        "din": "den",
+        "ditt": "dett",
+        "från": "frå", // or från
         "med": "wä",
         "till": "täll",
         "utan": "utan",
@@ -102,93 +118,126 @@
         "vad": "vo",
         "hur": "vöre",
         "sverige": "Schwerje",
-        "teknologin": "teknologin", // Keep technical terms often
-        "liv": "liv",
-        "mycket": "myttje"
+        "vårt": "wåLt", // Thick L hardcoded for this common word
+        "vissa": "nager", // Authentic
+        "trots": "fastän", // Authentic
+        "mycket": "myttje",
+        "aldrig": "aldre",
+        "inte": "int",
+        "eller": "heller"
     };
 
     // 2. Suffix Transformations (Morphology)
     const suffixRules = [
-        { suffix: "het", replace: "he", name: "-het -> -he" }, // osäkerhet -> osäkerhe
+        { suffix: "het", replace: "he", name: "-het -> -he" },
         { suffix: "heten", replace: "he", name: "-heten -> -he" },
-        { suffix: "nad", replace: "na", name: "-nad -> -na" }, // marknad -> markna
+        { suffix: "nad", replace: "na", name: "-nad -> -na" },
+        { suffix: "naden", replace: "na", name: "-naden -> -na" },
         { suffix: "ande", replace: "an", name: "-ande -> -an" },
         { suffix: "ning", replace: "ning", name: "-ning (keep)" },
         { suffix: "tion", replace: "tion", name: "-tion (keep)" },
-        { suffix: "en", replace: "n", name: "-en -> -n (Definite)" }, // bilen -> biln (simplified)
-        { suffix: "et", replace: "e", name: "-et -> -e (Definite)" }  // huset -> huse
+        { suffix: "en", replace: "n", name: "-en -> -n (Def)" },
+        { suffix: "et", replace: "e", name: "-et -> -e (Def)" },
+        { suffix: "erna", replace: "a", name: "-erna -> -a (Plural Def)" }, // decennierna -> decennia
+        { suffix: "arna", replace: "a", name: "-arna -> -a (Plural Def)" }, // bilarna -> bila
+        { suffix: "orna", replace: "a", name: "-orna -> -a (Plural Def)" }  // klockorna -> klocka
     ];
 
     // 3. Phonological patterns (Regex)
     const phonologyRules = [
-        { regex: /^v/, replace: "w", name: "Initial V->W" }, // var -> war
+        { regex: /^v/, replace: "w", name: "Initial V->W" },
         { regex: /sk\b/, replace: "sch", name: "Soft SK end" },
-        { regex: /rd\b/, replace: "L", name: "Thick L (rd)" },
-        { regex: /rt\b/, replace: "Lt", name: "Thick L (rt)" },
-        { regex: /rn\b/, replace: "Rn", name: "Thick N (rn)" },
-        { regex: /o(?=[bdfgklmnpstv])/, replace: "u", name: "O->U (mid-word)" }, // General rule
+        { regex: /sk(?=[eiyäö])/, replace: "sch", name: "Soft SK front" }, // skina -> schina
+        { regex: /o(?=[bdfgklmnpstv])/, replace: "u", name: "O->U (mid-word)" },
         { regex: /a(?=ng|nk)/, replace: "å", name: "A->Å (before nk/ng)" }
+    ];
+    
+    // 4. Thick L Rules (Retroflex)
+    const thickLRules = [
+        { regex: /rd\b/, replace: "L", name: "Thick L (rd)" }, // bord -> boL
+        { regex: /rt\b/, replace: "Lt", name: "Thick L (rt)" }, // bort -> boLt
+        { regex: /rn\b/, replace: "Rn", name: "Thick N (rn)" },
+        { regex: /rl\b/, replace: "L", name: "Thick L (rl)" }  // karl -> kaL
     ];
 
     function log(original, translated, rule) {
         const logPanel = document.getElementById('debug-log');
         const entry = document.createElement('div');
         entry.className = 'log-entry';
-        entry.innerHTML = `<div class="log-orig">${original}</div><div class="log-trans">${translated}</div><div class="log-rule">${rule}</div>`;
+        entry.innerHTML = `<div class="log-orig">${original}</div><div class="log-trans">${translated}</div><div class="log-rule">[${rule}]</div>`;
         logPanel.prepend(entry);
         if (logPanel.children.length > 50) logPanel.lastChild.remove();
     }
 
     function processText() {
         const input = document.getElementById('input').value;
-        const tokens = input.split(/(\s+|[.,!?:;-])/); // Preserve all delimiters
+        // Split by words but preserve delimiters
+        const tokens = input.split(/(\s+|[.,!?:;-"\(\)])/); 
         const outputField = document.getElementById('output');
-        document.getElementById('debug-log').innerHTML = ''; // Clear log
+        document.getElementById('debug-log').innerHTML = '';
         
         // Settings
         const useParticles = document.getElementById('rule-particles').checked;
         const useSuffixes = document.getElementById('rule-suffixes').checked;
         const useVerbs = document.getElementById('rule-verbs').checked;
-        const usePhono = document.getElementById('rule-phonology').checked;
+        const useThickL = document.getElementById('rule-thick-l').checked;
+        const usePhono = document.getElementById('rule-phono').checked;
 
-        let processedTokens = tokens.map(token => {
+        let processedTokens = tokens.map((token, index) => {
             if (!token.match(/[a-zA-ZåäöÅÄÖ]/)) return token; // Skip non-words
 
             let original = token;
             let word = token.toLowerCase();
             let appliedRule = "Raw";
 
-            // A. Particle Check (Exact match)
-            if (useParticles && particleRules[word]) {
+            // Special Context: "de" -> "dii" if followed by "senaste" or similar adjectives?
+            // Heuristic: If "de" is followed by a word ending in -a or -e, it might be an article.
+            // For now, let's keep "de" -> "döm" as subject, but maybe "dii" for article.
+            // Complex to detect without full parsing. Let's force "döm" generally but check specific phrase.
+            if (word === "de" && tokens[index+2] && tokens[index+2].match(/senaste|gamla|nya/)) {
+                 word = "dii";
+                 appliedRule = "Article (dii)";
+            } 
+            else if (useParticles && particleRules[word]) {
                 word = particleRules[word];
                 appliedRule = "Particle";
             } else {
-                // B. Verb Apocope (Present Tense -ar)
-                // Rule: If ends in -ar and > 3 chars, drop -r or -ar depending on dialect
-                // Pitemål usually drops the 'r' or the whole suffix 'ar' -> 'a' or nothing.
-                // Let's go with dropping 'r' -> 'a' as safe, or dropping 'ar' for strong apocope.
-                // Your feedback: "dansar -> dans"
-                if (useVerbs && word.endsWith("ar") && word.length > 3) {
-                     // Check if it's likely a verb (heuristic)
-                     word = word.slice(0, -2); // Drop 'ar' completely
-                     appliedRule = "Verb Apocope (-ar)";
+                // VERBS: Apocope (-ar / -er)
+                // Rule: Present tense verbs drop suffix
+                if (useVerbs && (word.endsWith("ar") || word.endsWith("er")) && word.length > 3) {
+                     // Safety check: is it likely a verb? 
+                     // Common nouns ending in -er: fader, moder, broder (often become far/mor/bror anyway)
+                     // Let's apply it.
+                     word = word.slice(0, -2); 
+                     appliedRule = "Verb Apocope";
                 }
 
-                // C. Suffixes
+                // SUFFIXES
+                let suffixChanged = false;
                 if (useSuffixes) {
                     for (let rule of suffixRules) {
                         if (word.endsWith(rule.suffix)) {
-                            // Check if word is long enough to have a suffix
                             if (word.length > rule.suffix.length + 2) { 
                                 word = word.slice(0, -rule.suffix.length) + rule.replace;
                                 appliedRule = rule.name;
+                                suffixChanged = true;
                                 break;
                             }
                         }
                     }
                 }
 
-                // D. Phonology (General Rules)
+                // THICK L
+                if (useThickL) {
+                    for (let rule of thickLRules) {
+                        if (word.match(rule.regex)) {
+                            word = word.replace(rule.regex, rule.replace);
+                            if (!suffixChanged) appliedRule = rule.name;
+                        }
+                    }
+                }
+
+                // PHONOLOGY
                 if (usePhono) {
                     for (let rule of phonologyRules) {
                         if (word.match(rule.regex)) {
@@ -198,19 +247,14 @@
                     }
                 }
                 
-                // E. General Apocope (Final -a drop)
-                // Pitemål famously drops final -a in many nouns and infinitives
-                // pratar -> prata -> prat
-                if (word.endsWith('a') && word.length > 3) {
-                    // Check if we haven't already apocoped a verb
-                    if (!appliedRule.includes("Apocope")) {
-                        word = word.slice(0, -1);
-                        appliedRule += " + Final Apocope";
-                    }
+                // General Apocope (Final -a drop)
+                if (word.endsWith('a') && word.length > 3 && !suffixChanged && !appliedRule.includes("Apocope")) {
+                    word = word.slice(0, -1);
+                    appliedRule += " + Final Apocope";
                 }
             }
 
-            // Restore capitalization
+            // Capitalization
             if (original[0] === original[0].toUpperCase()) {
                 word = word.charAt(0).toUpperCase() + word.slice(1);
             }
