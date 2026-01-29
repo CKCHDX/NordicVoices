@@ -1,0 +1,269 @@
+{
+  "name": "Nordic Dialects IPA Phonetic Guide",
+  "version": "1.0",
+  "description": "Universal IPA reference for Nordic dialect pronunciation",
+  "consonants": [
+    {
+      "letter": "p",
+      "ipa": "[p]",
+      "type": "voiceless bilabial plosive",
+      "examples": [
+        {"word": "papper", "ipa": "[ˈpapːɛr]", "english": "paper"}
+      ]
+    },
+    {
+      "letter": "b",
+      "ipa": "[b]",
+      "type": "voiced bilabial plosive",
+      "examples": [
+        {"word": "bok", "ipa": "[buːk]", "english": "book"}
+      ]
+    },
+    {
+      "letter": "t",
+      "ipa": "[t]",
+      "type": "voiceless alveolar plosive",
+      "examples": [
+        {"word": "tack", "ipa": "[tak]", "english": "thanks"}
+      ]
+    },
+    {
+      "letter": "d",
+      "ipa": "[d]",
+      "type": "voiced alveolar plosive",
+      "examples": [
+        {"word": "dag", "ipa": "[dɑːɡ]", "english": "day"}
+      ]
+    },
+    {
+      "letter": "k",
+      "ipa": "[k]",
+      "type": "voiceless velar plosive",
+      "examples": [
+        {"word": "katt", "ipa": "[katː]", "english": "cat"}
+      ]
+    },
+    {
+      "letter": "g",
+      "ipa": "[ɡ]",
+      "type": "voiced velar plosive",
+      "examples": [
+        {"word": "god", "ipa": "[ɡuːd]", "english": "good"}
+      ]
+    },
+    {
+      "letter": "f",
+      "ipa": "[f]",
+      "type": "voiceless labiodental fricative",
+      "examples": [
+        {"word": "far", "ipa": "[fɑːr]", "english": "father"}
+      ]
+    },
+    {
+      "letter": "v",
+      "ipa": "[v]",
+      "type": "voiced labiodental fricative",
+      "examples": [
+        {"word": "vatten", "ipa": "[ˈvatːɛn]", "english": "water"}
+      ]
+    },
+    {
+      "letter": "s",
+      "ipa": "[s]",
+      "type": "voiceless alveolar fricative",
+      "examples": [
+        {"word": "sol", "ipa": "[suːl]", "english": "sun"}
+      ]
+    },
+    {
+      "letter": "h",
+      "ipa": "[h]",
+      "type": "voiceless glottal fricative",
+      "examples": [
+        {"word": "hus", "ipa": "[hʉːs]", "english": "house"}
+      ]
+    },
+    {
+      "letter": "j",
+      "ipa": "[j]",
+      "type": "voiced palatal approximant",
+      "examples": [
+        {"word": "ja", "ipa": "[jɑː]", "english": "yes"}
+      ]
+    },
+    {
+      "letter": "l",
+      "ipa": "[l]",
+      "type": "voiced alveolar lateral approximant",
+      "examples": [
+        {"word": "läsa", "ipa": "[ˈlɛːsa]", "english": "to read"}
+      ]
+    },
+    {
+      "letter": "r",
+      "ipa": "[r] or [ɾ]",
+      "type": "voiced alveolar trill or tap",
+      "examples": [
+        {"word": "röd", "ipa": "[røːd]", "english": "red"}
+      ],
+      "notes": "Often retroflex in Nordic dialects"
+    },
+    {
+      "letter": "m",
+      "ipa": "[m]",
+      "type": "voiced bilabial nasal",
+      "examples": [
+        {"word": "mor", "ipa": "[muːr]", "english": "mother"}
+      ]
+    },
+    {
+      "letter": "n",
+      "ipa": "[n]",
+      "type": "voiced alveolar nasal",
+      "examples": [
+        {"word": "näsa", "ipa": "[ˈnɛːsa]", "english": "nose"}
+      ]
+    },
+    {
+      "letter": "ng",
+      "ipa": "[ŋ]",
+      "type": "voiced velar nasal",
+      "examples": [
+        {"word": "ung", "ipa": "[ʉŋ]", "english": "young"}
+      ]
+    }
+  ],
+  "vowels": [
+    {
+      "letter": "a",
+      "ipa": "[ɑː] or [a]",
+      "type": "open back unrounded vowel",
+      "examples": [
+        {"word": "dag", "ipa": "[dɑːɡ]", "english": "day"}
+      ]
+    },
+    {
+      "letter": "e",
+      "ipa": "[eː] or [ɛ]",
+      "type": "close-mid front unrounded vowel",
+      "examples": [
+        {"word": "sten", "ipa": "[steːn]", "english": "stone"}
+      ]
+    },
+    {
+      "letter": "i",
+      "ipa": "[iː] or [ɪ]",
+      "type": "close front unrounded vowel",
+      "examples": [
+        {"word": "bil", "ipa": "[biːl]", "english": "car"}
+      ]
+    },
+    {
+      "letter": "o",
+      "ipa": "[uː] or [ɔ]",
+      "type": "close back rounded vowel",
+      "examples": [
+        {"word": "bok", "ipa": "[buːk]", "english": "book"}
+      ]
+    },
+    {
+      "letter": "u",
+      "ipa": "[ʉː] or [ɵ]",
+      "type": "close central rounded vowel",
+      "examples": [
+        {"word": "hus", "ipa": "[hʉːs]", "english": "house"}
+      ]
+    },
+    {
+      "letter": "y",
+      "ipa": "[yː] or [ʏ]",
+      "type": "close front rounded vowel",
+      "examples": [
+        {"word": "nyckel", "ipa": "[ˈnʏkːɛl]", "english": "key"}
+      ]
+    },
+    {
+      "letter": "å",
+      "ipa": "[oː] or [ɔ]",
+      "type": "close-mid back rounded vowel",
+      "examples": [
+        {"word": "båt", "ipa": "[boːt]", "english": "boat"}
+      ]
+    },
+    {
+      "letter": "ä",
+      "ipa": "[ɛː] or [æ]",
+      "type": "open-mid front unrounded vowel",
+      "examples": [
+        {"word": "äta", "ipa": "[ˈɛːta]", "english": "to eat"}
+      ]
+    },
+    {
+      "letter": "ö",
+      "ipa": "[øː] or [œ]",
+      "type": "close-mid front rounded vowel",
+      "examples": [
+        {"word": "öra", "ipa": "[ˈøːra]", "english": "ear"}
+      ]
+    }
+  ],
+  "special_features": [
+    {
+      "name": "Retroflex consonants",
+      "description": "Common in Nordic dialects when 'r' precedes certain consonants",
+      "combinations": [
+        {"letters": "rd", "ipa": "[ɖ]", "example": "bord [buːɖ] (table)"},
+        {"letters": "rl", "ipa": "[ɭ]", "example": "karl [kɑːɭ] (man)"},
+        {"letters": "rn", "ipa": "[ɳ]", "example": "barn [bɑːɳ] (child)"},
+        {"letters": "rt", "ipa": "[ʈ]", "example": "kort [kuːʈ] (short)"},
+        {"letters": "rs", "ipa": "[ʂ]", "example": "Lars [lɑːʂ] (name)"}
+      ]
+    },
+    {
+      "name": "Palatalization",
+      "description": "Soft pronunciation before front vowels (e, i, y, ä, ö)",
+      "examples": [
+        {"letter": "k", "soft": "[ɕ]", "example": "kyrka [ˈɕʏrka] (church)"},
+        {"letter": "g", "soft": "[j]", "example": "gå [jɔː] (to go)"},
+        {"letter": "sk", "soft": "[ɧ]", "example": "skepp [ɧɛpː] (ship)"}
+      ]
+    },
+    {
+      "name": "Diphthongization",
+      "description": "Common in Old Norse preservation, two vowels blended",
+      "examples": [
+        {"modern": "e", "dialect": "ei", "ipa": "[eɪ]", "example": "sten → stein"},
+        {"modern": "ö", "dialect": "øy", "ipa": "[øʏ]", "example": "gröt → gröyt"},
+        {"modern": "å", "dialect": "au", "ipa": "[aʊ]", "example": "gå → gau"}
+      ]
+    },
+    {
+      "name": "Apocope",
+      "description": "Dropping of final unstressed vowels",
+      "examples": [
+        {"modern": "dansa", "dialect": "dans", "meaning": "to dance"},
+        {"modern": "tala", "dialect": "tal", "meaning": "to speak"},
+        {"modern": "äta", "dialect": "ät", "meaning": "to eat"}
+      ]
+    },
+    {
+      "name": "Thick L",
+      "description": "Retroflex L sound, characteristic of some northern dialects",
+      "ipa": "[ɭ]",
+      "notes": "Pronounced with tongue curled back, especially after 'r' or in specific positions"
+    }
+  ],
+  "notes": [
+    "Long vowels are marked with [ː] in IPA notation",
+    "Short vowels have no length marker",
+    "Stress is typically on the first syllable in Swedish and most Nordic dialects",
+    "Tonal accents (accent 1 and accent 2) exist but are not marked in this basic guide",
+    "Regional variations are significant - this guide provides standard pronunciations"
+  ],
+  "sources": [
+    "Swedish Phonetics and Phonology (Engstrand, 2004)",
+    "IPA Handbook (International Phonetic Association)",
+    "Nordic Dialect Studies",
+    "ISOF (Institutet för språk och folkminnen)"
+  ]
+}

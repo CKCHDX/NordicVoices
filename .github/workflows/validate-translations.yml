@@ -1,0 +1,116 @@
+name: Validate Translations and Data Files
+
+on:
+  push:
+    branches: [ '*' ]
+  pull_request:
+    branches: [ '*' ]
+
+jobs:
+  validate-json:
+    name: Validate JSON Files
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+    
+    - name: Validate JSON syntax
+      run: |
+        echo "Validating JSON files..."
+        find . -name "*.json" -type f | while read file; do
+          echo "Checking $file..."
+          python3 -m json.tool "$file" > /dev/null || exit 1
+        done
+        echo "✅ All JSON files are valid!"
+
+  test-cli-tools:
+    name: Test CLI Tools
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+    
+    - name: Find and test CLI tools
+      run: |
+        echo "Finding CLI tools..."
+        CLI_TOOLS=$(find . -name "*-cli.py" -type f)
+        
+        if [ -z "$CLI_TOOLS" ]; then
+          echo "No CLI tools found, skipping..."
+          exit 0
+        fi
+        
+        for tool in $CLI_TOOLS; do
+          echo "Testing $tool..."
+          python3 "$tool" --help 2>/dev/null || python3 "$tool" help 2>/dev/null || echo "No help command available for $tool"
+        done
+        echo "✅ CLI tools tested!"
+
+  check-structure:
+    name: Check Repository Structure
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Check required files
+      run: |
+        echo "Checking for required documentation files..."
+        
+        REQUIRED_FILES=(
+          "README.md"
+          "LICENSE"
+          "CONTRIBUTING.md"
+          "ARCHITECTURE.md"
+        )
+        
+        for file in "${REQUIRED_FILES[@]}"; do
+          if [ ! -f "$file" ]; then
+            echo "❌ Missing required file: $file"
+            exit 1
+          else
+            echo "✅ Found: $file"
+          fi
+        done
+        
+        echo "✅ All required files present!"
+
+  lint-markdown:
+    name: Lint Markdown Files
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Basic markdown check
+      run: |
+        echo "Checking markdown files for basic issues..."
+        MD_FILES=$(find . -name "*.md" -type f)
+        
+        for file in $MD_FILES; do
+          echo "Checking $file..."
+          # Check for empty files
+          if [ ! -s "$file" ]; then
+            echo "⚠️ Warning: $file is empty"
+          fi
+          # Check for valid UTF-8
+          if ! iconv -f UTF-8 -t UTF-8 "$file" > /dev/null 2>&1; then
+            echo "❌ Error: $file has invalid UTF-8 encoding"
+            exit 1
+          fi
+        done
+        echo "✅ Markdown files checked!"

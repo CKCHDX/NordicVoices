@@ -1,0 +1,304 @@
+{
+  "name": "Common Nordic Vocabulary - Old Norse Roots",
+  "version": "1.0",
+  "description": "Shared vocabulary across Nordic dialects with Old Norse etymology",
+  "note": "These words have common origins in Old Norse and appear across multiple dialects with variations",
+  "words": [
+    {
+      "id": 1,
+      "old_norse": "ek",
+      "modern_swedish": "jag",
+      "english": "I",
+      "category": "pronoun",
+      "dialect_variations": {
+        "bondska": "ja",
+        "gutnish": "eg",
+        "elfdalska": "ig"
+      },
+      "etymology": "From Old Norse 'ek', Proto-Germanic '*ek'"
+    },
+    {
+      "id": 2,
+      "old_norse": "þú",
+      "modern_swedish": "du",
+      "english": "you (singular)",
+      "category": "pronoun",
+      "dialect_variations": {
+        "bondska": "dö",
+        "gutnish": "þu",
+        "elfdalska": "du"
+      },
+      "etymology": "From Old Norse 'þú', Proto-Germanic '*þū'"
+    },
+    {
+      "id": 3,
+      "old_norse": "vér",
+      "modern_swedish": "vi",
+      "english": "we",
+      "category": "pronoun",
+      "dialect_variations": {
+        "bondska": "vi",
+        "gutnish": "vi",
+        "elfdalska": "wįð"
+      },
+      "etymology": "From Old Norse 'vér', Proto-Germanic '*wīz'"
+    },
+    {
+      "id": 4,
+      "old_norse": "hús",
+      "modern_swedish": "hus",
+      "english": "house",
+      "category": "noun",
+      "dialect_variations": {
+        "bondska": "hus",
+        "gutnish": "hūs",
+        "elfdalska": "aus"
+      },
+      "etymology": "From Old Norse 'hús', Proto-Germanic '*hūsą'"
+    },
+    {
+      "id": 5,
+      "old_norse": "steinn",
+      "modern_swedish": "sten",
+      "english": "stone",
+      "category": "noun",
+      "dialect_variations": {
+        "bondska": "stein",
+        "gutnish": "stain",
+        "elfdalska": "stain"
+      },
+      "etymology": "From Old Norse 'steinn', Proto-Germanic '*stainaz'"
+    },
+    {
+      "id": 6,
+      "old_norse": "vatn",
+      "modern_swedish": "vatten",
+      "english": "water",
+      "category": "noun",
+      "dialect_variations": {
+        "bondska": "vatn",
+        "gutnish": "vatn",
+        "elfdalska": "watn"
+      },
+      "etymology": "From Old Norse 'vatn', Proto-Germanic '*watōr'"
+    },
+    {
+      "id": 7,
+      "old_norse": "ganga",
+      "modern_swedish": "gå",
+      "english": "to go",
+      "category": "verb",
+      "dialect_variations": {
+        "bondska": "gå",
+        "gutnish": "ganga",
+        "elfdalska": "gå"
+      },
+      "etymology": "From Old Norse 'ganga', Proto-Germanic '*ganganą'"
+    },
+    {
+      "id": 8,
+      "old_norse": "eta",
+      "modern_swedish": "äta",
+      "english": "to eat",
+      "category": "verb",
+      "dialect_variations": {
+        "bondska": "ät",
+        "gutnish": "äta",
+        "elfdalska": "ätå"
+      },
+      "etymology": "From Old Norse 'eta', Proto-Germanic '*etaną'"
+    },
+    {
+      "id": 9,
+      "old_norse": "heill",
+      "modern_swedish": "hej",
+      "english": "hello/healthy",
+      "category": "greeting",
+      "dialect_variations": {
+        "bondska": "hej",
+        "gutnish": "hail",
+        "elfdalska": "eil"
+      },
+      "etymology": "From Old Norse 'heill', Proto-Germanic '*hailaz'"
+    },
+    {
+      "id": 10,
+      "old_norse": "maðr",
+      "modern_swedish": "man",
+      "english": "man",
+      "category": "noun",
+      "dialect_variations": {
+        "bondska": "man",
+        "gutnish": "mann",
+        "elfdalska": "mann"
+      },
+      "etymology": "From Old Norse 'maðr', Proto-Germanic '*mannaz'"
+    },
+    {
+      "id": 11,
+      "old_norse": "barn",
+      "modern_swedish": "barn",
+      "english": "child",
+      "category": "noun",
+      "dialect_variations": {
+        "bondska": "barn",
+        "gutnish": "barn",
+        "elfdalska": "barn"
+      },
+      "etymology": "From Old Norse 'barn', Proto-Germanic '*barną'"
+    },
+    {
+      "id": 12,
+      "old_norse": "heita",
+      "modern_swedish": "heta",
+      "english": "to be called",
+      "category": "verb",
+      "dialect_variations": {
+        "bondska": "heit",
+        "gutnish": "haita",
+        "elfdalska": "aitå"
+      },
+      "etymology": "From Old Norse 'heita', Proto-Germanic '*haitaną'"
+    },
+    {
+      "id": 13,
+      "old_norse": "nótt",
+      "modern_swedish": "natt",
+      "english": "night",
+      "category": "noun",
+      "dialect_variations": {
+        "bondska": "natt",
+        "gutnish": "nātt",
+        "elfdalska": "natt"
+      },
+      "etymology": "From Old Norse 'nótt', Proto-Germanic '*nahts'"
+    },
+    {
+      "id": 14,
+      "old_norse": "dagr",
+      "modern_swedish": "dag",
+      "english": "day",
+      "category": "noun",
+      "dialect_variations": {
+        "bondska": "dag",
+        "gutnish": "dagur",
+        "elfdalska": "dag"
+      },
+      "etymology": "From Old Norse 'dagr', Proto-Germanic '*dagaz'"
+    },
+    {
+      "id": 15,
+      "old_norse": "ok",
+      "modern_swedish": "och",
+      "english": "and",
+      "category": "conjunction",
+      "dialect_variations": {
+        "bondska": "å",
+        "gutnish": "ok",
+        "elfdalska": "åk"
+      },
+      "etymology": "From Old Norse 'ok', Proto-Germanic '*auk'"
+    },
+    {
+      "id": 16,
+      "old_norse": "eigi",
+      "modern_swedish": "inte",
+      "english": "not",
+      "category": "negation",
+      "dialect_variations": {
+        "bondska": "ikk",
+        "gutnish": "int",
+        "elfdalska": "int"
+      },
+      "etymology": "From Old Norse 'eigi', Proto-Germanic '*ne + aiwa'"
+    },
+    {
+      "id": 17,
+      "old_norse": "já",
+      "modern_swedish": "ja",
+      "english": "yes",
+      "category": "particle",
+      "dialect_variations": {
+        "bondska": "ja",
+        "gutnish": "jā",
+        "elfdalska": "ja"
+      },
+      "etymology": "From Old Norse 'já', Proto-Germanic '*ja'"
+    },
+    {
+      "id": 18,
+      "old_norse": "nei",
+      "modern_swedish": "nej",
+      "english": "no",
+      "category": "particle",
+      "dialect_variations": {
+        "bondska": "nej",
+        "gutnish": "nai",
+        "elfdalska": "nai"
+      },
+      "etymology": "From Old Norse 'nei', Proto-Germanic '*ne + aiwa'"
+    },
+    {
+      "id": 19,
+      "old_norse": "kona",
+      "modern_swedish": "kvinna",
+      "english": "woman",
+      "category": "noun",
+      "dialect_variations": {
+        "bondska": "kvinn",
+        "gutnish": "kuinn",
+        "elfdalska": "kwinn"
+      },
+      "etymology": "From Old Norse 'kona', Proto-Germanic '*kwenōn'"
+    },
+    {
+      "id": 20,
+      "old_norse": "tré",
+      "modern_swedish": "träd",
+      "english": "tree",
+      "category": "noun",
+      "dialect_variations": {
+        "bondska": "trä",
+        "gutnish": "träd",
+        "elfdalska": "trað"
+      },
+      "etymology": "From Old Norse 'tré', Proto-Germanic '*trewą'"
+    }
+  ],
+  "transformation_patterns": [
+    {
+      "pattern_name": "Diphthong preservation",
+      "description": "Many dialects preserve Old Norse diphthongs that were simplified in modern Swedish",
+      "examples": [
+        {"old_norse": "steinn", "modern": "sten", "dialects_preserve": ["bondska", "gutnish"]},
+        {"old_norse": "bein", "modern": "ben", "dialects_preserve": ["bondska", "elfdalska"]}
+      ]
+    },
+    {
+      "pattern_name": "Apocope resistance",
+      "description": "Some dialects retain final vowels lost in modern Swedish",
+      "examples": [
+        {"old_norse": "heita", "modern": "heta", "full_form_in": ["gutnish", "elfdalska"]},
+        {"old_norse": "ganga", "modern": "gå", "full_form_in": ["gutnish"]}
+      ]
+    },
+    {
+      "pattern_name": "Pronoun simplification",
+      "description": "First person pronoun reduced from 'ek' to various forms",
+      "evolution": "Old Norse 'ek' → Modern Swedish 'jag' → Dialects 'ja/eg/ig'"
+    }
+  ],
+  "notes": [
+    "This vocabulary represents common roots shared across Nordic dialects",
+    "Individual dialects may have additional unique vocabulary not listed here",
+    "Pronunciation varies significantly even when spelling is similar",
+    "Many dialects preserve features lost in modern standard Swedish",
+    "Etymology traces back to Proto-Germanic and Proto-Indo-European roots"
+  ],
+  "sources": [
+    "Cleasby-Vigfusson Old Norse Dictionary",
+    "Svenska Akademiens Ordbok (SAOB)",
+    "Nordic Dialect Research (ISOF)",
+    "Comparative Germanic Linguistics"
+  ]
+}

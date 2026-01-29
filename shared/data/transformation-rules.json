@@ -1,0 +1,270 @@
+{
+  "name": "Core Linguistic Transformation Rules",
+  "version": "1.0",
+  "description": "Base transformation rules applicable across Nordic dialects",
+  "note": "Individual dialects will customize and extend these rules",
+  "rule_categories": [
+    {
+      "category": "pronoun_substitution",
+      "phase": 1,
+      "description": "High-frequency pronoun changes from standard Swedish to dialect forms",
+      "priority": "high",
+      "rules": [
+        {
+          "rule_id": "pron_01",
+          "name": "First person singular",
+          "swedish": "jag",
+          "pattern": "\\bjag\\b",
+          "common_variations": ["ja", "eg", "ig", "i"],
+          "notes": "Most dialects simplify 'jag' to a shorter form"
+        },
+        {
+          "rule_id": "pron_02",
+          "name": "Second person singular",
+          "swedish": "du",
+          "pattern": "\\bdu\\b",
+          "common_variations": ["dö", "þu", "du"],
+          "notes": "Northern dialects often use 'dö'"
+        },
+        {
+          "rule_id": "pron_03",
+          "name": "Third person plural",
+          "swedish": "de/dom",
+          "pattern": "\\b(de|dom)\\b",
+          "common_variations": ["di", "dom", "dei"],
+          "notes": "Varies significantly by region"
+        }
+      ]
+    },
+    {
+      "category": "vowel_transformation",
+      "phase": 2,
+      "description": "Systematic vowel shifts restoring Old Norse sounds",
+      "priority": "medium",
+      "rules": [
+        {
+          "rule_id": "vowel_01",
+          "name": "E to EI diphthongization",
+          "swedish_vowel": "e",
+          "dialect_vowel": "ei",
+          "ipa": "[eɪ]",
+          "condition": "short 'e' in monosyllabic stressed syllables",
+          "examples": [
+            {"swedish": "sten", "dialect": "stein", "english": "stone"},
+            {"swedish": "ben", "dialect": "bein", "english": "leg/bone"},
+            {"swedish": "hem", "dialect": "heim", "english": "home"}
+          ],
+          "old_norse_origin": "Restores Old Norse diphthong 'ei'"
+        },
+        {
+          "rule_id": "vowel_02",
+          "name": "Ö to ØY diphthongization",
+          "swedish_vowel": "ö",
+          "dialect_vowel": "øy",
+          "ipa": "[øʏ]",
+          "condition": "stressed syllables, especially final position",
+          "examples": [
+            {"swedish": "gröt", "dialect": "gröyt", "english": "porridge"},
+            {"swedish": "dö", "dialect": "døy", "english": "to die"}
+          ],
+          "old_norse_origin": "Preserves Old Norse diphthong"
+        },
+        {
+          "rule_id": "vowel_03",
+          "name": "Å to AU diphthongization",
+          "swedish_vowel": "å",
+          "dialect_vowel": "au",
+          "ipa": "[aʊ]",
+          "condition": "in some dialects, especially Gutnish",
+          "examples": [
+            {"swedish": "gå", "dialect": "gau", "english": "to go"},
+            {"swedish": "tå", "dialect": "tau", "english": "toe"}
+          ],
+          "old_norse_origin": "From Old Norse 'au'"
+        },
+        {
+          "rule_id": "vowel_04",
+          "name": "A to Å darkening",
+          "swedish_vowel": "a",
+          "dialect_vowel": "å",
+          "ipa": "[ɔː]",
+          "condition": "before certain consonants (r, l, n)",
+          "examples": [
+            {"swedish": "var", "dialect": "vår", "english": "was"},
+            {"swedish": "tal", "dialect": "tål", "english": "speech"}
+          ]
+        }
+      ]
+    },
+    {
+      "category": "apocope",
+      "phase": 3,
+      "description": "Dropping of final unstressed vowels",
+      "priority": "high",
+      "rules": [
+        {
+          "rule_id": "apoc_01",
+          "name": "Verb apocope -a",
+          "description": "Drop final -a in infinitives and present tense",
+          "pattern": "a$",
+          "examples": [
+            {"swedish": "tala", "dialect": "tal", "english": "to speak"},
+            {"swedish": "äta", "dialect": "ät", "english": "to eat"},
+            {"swedish": "dansa", "dialect": "dans", "english": "to dance"}
+          ],
+          "exceptions": "Some weak verbs retain the -a"
+        },
+        {
+          "rule_id": "apoc_02",
+          "name": "Verb apocope -er",
+          "description": "Drop -er ending in present tense",
+          "pattern": "er$",
+          "examples": [
+            {"swedish": "heter", "dialect": "heit", "english": "is called"},
+            {"swedish": "äter", "dialect": "ät", "english": "eats"},
+            {"swedish": "kommer", "dialect": "kåmm", "english": "comes"}
+          ]
+        },
+        {
+          "rule_id": "apoc_03",
+          "name": "Noun apocope -e",
+          "description": "Drop final -e in weak masculine nouns",
+          "pattern": "e$",
+          "condition": "weak masculine nouns",
+          "examples": [
+            {"swedish": "pojke", "dialect": "pojk", "english": "boy"},
+            {"swedish": "gosse", "dialect": "goss", "english": "lad"}
+          ]
+        }
+      ]
+    },
+    {
+      "category": "consonant_shifts",
+      "phase": 3,
+      "description": "Consonant changes including retroflexion",
+      "priority": "medium",
+      "rules": [
+        {
+          "rule_id": "cons_01",
+          "name": "Retroflexion rd→ɖ",
+          "description": "'rd' becomes retroflex [ɖ]",
+          "swedish_pattern": "rd",
+          "dialect_pattern": "ɖ (or L in thick L dialects)",
+          "examples": [
+            {"swedish": "bord", "dialect": "boɖ/boL", "english": "table"},
+            {"swedish": "gård", "dialect": "gåɖ/gåL", "english": "farm"}
+          ]
+        },
+        {
+          "rule_id": "cons_02",
+          "name": "Retroflexion rl→ɭ",
+          "description": "'rl' becomes retroflex [ɭ]",
+          "swedish_pattern": "rl",
+          "dialect_pattern": "ɭ (thick L)",
+          "examples": [
+            {"swedish": "karl", "dialect": "kaɭ", "english": "man"},
+            {"swedish": "farlig", "dialect": "faɭi", "english": "dangerous"}
+          ]
+        },
+        {
+          "rule_id": "cons_03",
+          "name": "Retroflexion rn→ɳ",
+          "description": "'rn' becomes retroflex [ɳ]",
+          "swedish_pattern": "rn",
+          "dialect_pattern": "ɳ",
+          "examples": [
+            {"swedish": "barn", "dialect": "baɳ", "english": "child"},
+            {"swedish": "horn", "dialect": "hoɳ", "english": "horn"}
+          ]
+        },
+        {
+          "rule_id": "cons_04",
+          "name": "Palatalization k→ɕ",
+          "description": "'k' becomes [ɕ] before front vowels (e, i, y, ä, ö)",
+          "condition": "before front vowels",
+          "examples": [
+            {"swedish": "kyrka", "dialect": "ɕyrka", "english": "church"},
+            {"swedish": "kär", "dialect": "ɕär", "english": "dear"}
+          ]
+        }
+      ]
+    },
+    {
+      "category": "word_substitution",
+      "phase": 1,
+      "description": "Common word replacements for high-frequency terms",
+      "priority": "high",
+      "rules": [
+        {
+          "rule_id": "word_01",
+          "name": "Conjunction 'och' replacement",
+          "swedish": "och",
+          "common_variations": ["å", "ok", "åk"],
+          "old_norse": "ok"
+        },
+        {
+          "rule_id": "word_02",
+          "name": "Negation 'inte' replacement",
+          "swedish": "inte",
+          "common_variations": ["ikk", "int", "ittj"],
+          "old_norse": "eigi"
+        },
+        {
+          "rule_id": "word_03",
+          "name": "Modal 'måste' variations",
+          "swedish": "måste",
+          "common_variations": ["gatt", "mått", "må"],
+          "notes": "Very dialect-specific"
+        }
+      ]
+    },
+    {
+      "category": "morphological",
+      "phase": 4,
+      "description": "Advanced morphological changes",
+      "priority": "low",
+      "rules": [
+        {
+          "rule_id": "morph_01",
+          "name": "Definite article suffixation",
+          "description": "Definite articles attach to nouns",
+          "examples": [
+            {"indefinite": "hus", "definite": "huset", "dialect_variations": ["huse", "husi"]},
+            {"indefinite": "bok", "definite": "boken", "dialect_variations": ["boka", "boki"]}
+          ]
+        },
+        {
+          "rule_id": "morph_02",
+          "name": "Dative case preservation",
+          "description": "Some dialects preserve dative case for location",
+          "old_norse_origin": "Dative case from Old Norse",
+          "examples": [
+            {"location": "i huset", "dative_form": "i huse"},
+            {"location": "på gården", "dative_form": "på gårde"}
+          ]
+        }
+      ]
+    }
+  ],
+  "application_order": [
+    "Phase 1: word_substitution (pronouns, high-frequency words)",
+    "Phase 2: vowel_transformation (systematic vowel changes)",
+    "Phase 3: consonant_shifts and apocope (consonants and endings)",
+    "Phase 4: morphological (grammar and advanced features)"
+  ],
+  "notes": [
+    "Rules should be applied in the order specified for correct results",
+    "Not all dialects use all rules - customize per dialect",
+    "Some rules may conflict - dialect-specific priority needed",
+    "Test thoroughly with native speaker verification when possible",
+    "Exceptions are common - document them in dialect-specific rules"
+  ],
+  "dialect_customization_guide": {
+    "step_1": "Copy these base rules to dialect-specific rules.json",
+    "step_2": "Customize patterns and replacements for your dialect",
+    "step_3": "Add dialect-specific exceptions",
+    "step_4": "Specify application priority",
+    "step_5": "Test with example sentences",
+    "step_6": "Verify with native speakers when possible"
+  }
+}
